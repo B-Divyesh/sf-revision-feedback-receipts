@@ -1,0 +1,56 @@
+import AxeBuilder from '@axe-core/playwright';
+import { expect, test } from '@playwright/test';
+
+test.beforeEach(async ({ page }) => {
+  await page.goto('/');
+  await page.evaluate(() => localStorage.clear());
+  await page.reload();
+});
+
+test('creates a complete student revision receipt', async ({ page }, testInfo) => {
+  await expect(page).toHaveTitle(/Revision Receipts/);
+  await expect(page.getByRole('heading', { level: 1 })).toHaveCount(1);
+
+  await page.getByLabel('Student name').fill('Jordan K.');
+  await page.getByLabel('Assignment').fill('Community park argument');
+  await page.getByLabel('Feedback goal 1').fill('Use specific evidence to support the claim');
+  await page.getByLabel('First draft text').fill('Our town needs a park. Parks are good. This would help everyone.');
+  await page.getByLabel('Revised draft text').fill('Our town needs a park. A 2025 survey found that 68 percent of residents lack a nearby green space. This would help everyone. The evidence makes the need concrete.');
+  await page.getByRole('button', { name: 'Find changed passages' }).click();
+
+  await expect(page.getByRole('heading', { name: 'Connect change to intention' })).toBeVisible();
+  await expect(page.locator('.change-card')).toHaveCount(2);
+  await page.getByLabel('Strongest changed passage').selectOption('change-1');
+  await page.getByLabel('What did you change, and why?').fill('I replaced a vague statement with survey evidence so the claim is supported by a specific fact.');
+  await page.getByRole('button', { name: 'Finish the receipt' }).click();
+
+  await expect(page.getByRole('heading', { name: 'Ready for review' })).toBeVisible();
+  await expect(page.locator('.receipt-goal')).toContainText('survey evidence');
+  await expect(page.getByRole('button', { name: 'Download receipt' })).toBeVisible();
+
+  if (testInfo.project.name === 'chromium') {
+    const results = await new AxeBuilder({ page }).exclude('.hero-art').analyze();
+    expect(results.violations.filter((violation) => ['critical', 'serious'].includes(violation.impact ?? ''))).toEqual([]);
+  }
+});
+
+test('explains validation errors and keeps work locally', async ({ page }) => {
+  await page.getByRole('button', { name: 'Find changed passages' }).click();
+  await expect(page.getByRole('alert')).toContainText('Add the student name');
+  await page.getByLabel('Student name').fill('A. Student');
+  await page.waitForTimeout(250);
+  await page.reload();
+  await expect(page.getByLabel('Student name')).toHaveValue('A. Student');
+});
+
+test('legal pages have required landmarks and no serious accessibility issues', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name === 'mobile', 'Covered once; responsive legal layout is static CSS.');
+  for (const path of ['/privacy/', '/terms/']) {
+    await page.goto(path);
+    await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+    await expect(page.locator('main')).toHaveCount(1);
+    await expect(page.getByRole('heading', { level: 1 })).toHaveCount(1);
+    const results = await new AxeBuilder({ page }).analyze();
+    expect(results.violations.filter((violation) => ['critical', 'serious'].includes(violation.impact ?? ''))).toEqual([]);
+  }
+});

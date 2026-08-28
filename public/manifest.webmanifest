@@ -1,0 +1,10 @@
+{
+  "name": "Revision Receipts",
+  "short_name": "Receipts",
+  "description": "Turn feedback goals and draft changes into a concise revision receipt.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f4f0e6",
+  "theme_color": "#d9ff57",
+  "icons": [{"src":"/mark.svg","sizes":"any","type":"image/svg+xml","purpose":"any"}]
+}
