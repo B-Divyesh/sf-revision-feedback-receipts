@@ -32,7 +32,7 @@ img { display: block; max-width: 100%; }
 
 .offline-banner { padding: 8px 20px; background: var(--blue); border-bottom: var(--line); text-align: center; font-weight: 700; }
 .site-header { min-height: 76px; display: flex; align-items: center; gap: 32px; padding: 12px max(20px, calc((100vw - 1180px) / 2)); border-bottom: var(--line); background: var(--sheet); }
-.brand { display: inline-flex; align-items: center; gap: 10px; margin-right: auto; font: 900 16px/0.9 "Arial Black", Arial, sans-serif; text-decoration: none; text-transform: uppercase; letter-spacing: -0.03em; }
+.brand { min-height: 44px; display: inline-flex; align-items: center; gap: 10px; margin-right: auto; font: 900 16px/0.9 "Arial Black", Arial, sans-serif; text-decoration: none; text-transform: uppercase; letter-spacing: -0.03em; }
 .brand img { width: 44px; height: 44px; }
 .site-header nav, .site-footer nav { display: flex; gap: 24px; font-weight: 700; }
 .site-header nav a { min-height: 44px; display: inline-flex; align-items: center; }
@@ -86,7 +86,7 @@ input:hover, textarea:hover, select:hover { border-color: var(--red); }
 .field-hint { margin: 7px 0 0; color: var(--muted); font-size: 0.875rem; }
 .goals-fieldset { margin: 32px 0 0; padding: 0; border: 0; }
 .goal-list { display: grid; gap: 12px; margin: 20px 0 16px; }
-.goal-row { display: grid; grid-template-columns: 44px 1fr 44px; align-items: center; gap: 10px; }
+.goal-row { display: grid; grid-template-columns: 44px minmax(0, 1fr) 44px; align-items: center; gap: 10px; }
 .goal-index { width: 44px; height: 44px; display: grid; place-items: center; border: var(--line); background: var(--lime); font-weight: 900; }
 .icon-button { width: 44px; height: 44px; display: grid; place-items: center; border: var(--line); background: var(--sheet); cursor: pointer; font-size: 1.3rem; font-weight: 900; }
 .icon-button:hover { background: #ffd8d4; }
@@ -127,9 +127,9 @@ input:hover, textarea:hover, select:hover { border-color: var(--red); }
 .passage blockquote { margin: 0; font: 1rem/1.55 Georgia, "Times New Roman", serif; overflow-wrap: anywhere; white-space: pre-wrap; }
 .passage.before blockquote { color: #5f2924; text-decoration: line-through; text-decoration-color: var(--red); text-decoration-thickness: 2px; }
 .empty-passage { color: var(--muted); font-style: italic; text-decoration: none !important; }
-.goal-evidence-list { display: grid; gap: 24px; margin-top: 40px; }
+.goal-evidence-list { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; margin-top: 40px; }
 .goal-evidence { padding: 24px; border: var(--line); background: #faf4e7; box-shadow: 4px 4px 0 var(--ink); }
-.goal-evidence h4 { margin: 0 0 16px; font-size: 1.05rem; }
+.goal-evidence h4 { margin: 0 0 16px; font-size: 1.05rem; overflow-wrap: anywhere; }
 .goal-evidence h4 span { display: inline-grid; width: 30px; height: 30px; place-items: center; margin-right: 8px; background: var(--lime); border: 1px solid var(--ink); }
 .goal-evidence .field + .field { margin-top: 18px; }
 .goal-evidence textarea { min-height: 110px; }
@@ -141,19 +141,19 @@ input:hover, textarea:hover, select:hover { border-color: var(--red); }
 .receipt-brand { margin-bottom: 8px; font: 900 0.8rem "Arial Black", Arial, sans-serif; text-transform: uppercase; letter-spacing: 0.12em; }
 .receipt-header h2 { margin: 0; }
 .status-stamp { align-self: flex-start; border: 4px double var(--danger); padding: 8px 12px; color: var(--danger); font: 900 0.9rem/1.05 "Arial Black", Arial, sans-serif; text-align: center; text-transform: uppercase; transform: rotate(2deg); }
-.receipt-meta { display: grid; grid-template-columns: 1fr 1fr 1fr; margin: 24px 0 8px; }
+.receipt-meta { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 24px 0 8px; }
 .receipt-meta div { padding: 8px 12px 8px 0; border-bottom: 1px solid var(--ink); }
 .receipt-meta dt { font-size: 0.72rem; font-weight: 900; text-transform: uppercase; }
-.receipt-meta dd { margin: 3px 0 0; font-family: Georgia, "Times New Roman", serif; }
+.receipt-meta dd { margin: 3px 0 0; font-family: Georgia, "Times New Roman", serif; overflow-wrap: anywhere; }
 .receipt-goal { padding: 28px 0; border-bottom: 2px dashed var(--ink); }
-.receipt-goal h3 { margin-bottom: 8px; }
+.receipt-goal h3 { margin-bottom: 8px; overflow-wrap: anywhere; }
 .receipt-goal .goal-label { color: var(--muted); font-size: 0.75rem; font-weight: 900; text-transform: uppercase; }
-.receipt-evidence { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 18px 0; }
+.receipt-evidence { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin: 18px 0; }
 .quote-box { min-width: 0; padding: 14px; border-left: 5px solid var(--red); background: #faf4e7; }
 .quote-box.after { border-color: var(--green); background: #f3f9e5; }
 .quote-box strong { display: block; margin-bottom: 6px; font-size: 0.75rem; text-transform: uppercase; }
 .quote-box blockquote { margin: 0; font: 1rem/1.5 Georgia, "Times New Roman", serif; white-space: pre-wrap; overflow-wrap: anywhere; }
-.reflection { margin-bottom: 0; }
+.reflection { margin-bottom: 0; overflow-wrap: anywhere; }
 .reflection strong { background: var(--lime); }
 .receipt-caveat { margin-top: 32px; padding: 16px; border: var(--line); background: var(--blue); }
 .text-button { min-height: 44px; display: block; margin: 32px auto 0; border: 0; background: transparent; color: var(--danger); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
@@ -191,7 +191,7 @@ input:hover, textarea:hover, select:hover { border-color: var(--red); }
   .passage + .passage { border-left: 0; border-top: var(--line); }
   .receipt-paper { padding: 28px 18px; }
   .receipt-header { align-items: flex-start; }
-  .receipt-meta { grid-template-columns: 1fr; }
+  .receipt-meta { grid-template-columns: minmax(0, 1fr); }
   .site-footer { grid-template-columns: 1fr; }
   .site-footer .asset-note { grid-column: 1; }
 }
@@ -206,7 +206,7 @@ input:hover, textarea:hover, select:hover { border-color: var(--red); }
   .workspace { padding-inline: 12px; }
   .step-heading { gap: 14px; }
   .step-number { width: 48px; height: 48px; }
-  .goal-row { grid-template-columns: 38px 1fr 44px; }
+  .goal-row { grid-template-columns: 38px minmax(0, 1fr) 44px; }
   .goal-index { width: 38px; height: 44px; }
   .draft-tools { flex-wrap: wrap; }
   .word-count { margin-left: 0; width: 100%; }
