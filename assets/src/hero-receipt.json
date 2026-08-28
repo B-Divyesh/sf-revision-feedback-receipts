@@ -1,0 +1,9 @@
+{
+  "asset": "hero-receipt.png",
+  "generated": "2026-08-28",
+  "tool": "/opt/fleet/lib/gen-image.sh",
+  "deployment": "factory-image",
+  "size": "1536x1024",
+  "quality": "high",
+  "prompt": "Use case: stylized-concept. Asset type: landscape website hero illustration. Scene/backdrop: top-down editorial still life on a warm oat classroom desk. Subject: two overlapping student manuscript pages visually transitioning into a narrow blank receipt strip, with abstract red correction marks and acid-lime highlight bars, a red wooden pencil, lime highlighter, black binder clip, and pale carbon-blue paper slip. Style/medium: tactile cut-paper editorial collage with subtle realistic paper grain, crisp neo-brutalist geometry. Composition/framing: 3:2 landscape, objects concentrated toward the right and center, generous calm paper space on the left, clear before-to-after visual flow. Lighting/mood: hard morning window shadow, useful, candid, accountable. Color palette: warm oat, near-black ink, correction red, acid lime, pale carbon blue. Constraints: correction marks must be abstract and contain no words; no interfaces; no student-identifying data. Avoid: people, hands, screens, logos, brands, readable text, handwriting words, watermark, gradients, glossy 3D."
+}

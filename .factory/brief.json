@@ -1,0 +1,12 @@
+{
+  "slug": "revision-feedback-receipts",
+  "title": "Revision Receipts",
+  "territory": "utilities",
+  "user": "A secondary-school or college writing teacher who needs to give a class useful feedback and see whether a student acted on it without reading every draft side by side.",
+  "smallest_useful_product": "A browser-based document-pair tool: teacher marks 1–3 feedback goals, student uploads a revised plain-text/Markdown draft, and the tool produces quoted changed passages plus a student reflection.",
+  "success_measure": "In a four-week pilot, a teacher can verify adoption of two feedback goals per student in under two minutes and at least 70% of students submit a receipt.",
+  "artifact_class": "static-web",
+  "monetization": "free",
+  "constraints": "No model-generated writing or hidden scoring; files should remain in-browser by default; disclose that textual change is not proof of learning.",
+  "state": "RESEARCHED"
+}
