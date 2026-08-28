@@ -7,7 +7,7 @@ function assetFiles(directory: string, relativePath = ''): string[] {
   return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
     const path = `${relativePath}${entry.name}`;
     return entry.isDirectory() ? assetFiles(resolve(directory, entry.name), `${path}/`) : [path];
-  });
+  }).sort();
 }
 
 function outputFileForUrl(url: string): string {
@@ -34,10 +34,11 @@ function offlineShell(): Plugin {
           .filter((file) => !file.endsWith('.map'))
           .map((file) => `/assets/${file}`),
       ];
-      const revision = createHash('sha256')
-        .update(urls.join('\n'))
-        .update(urls.map((url) => readFileSync(resolve(outputDirectory, outputFileForUrl(url))).join('\n')))
-        .digest('hex').slice(0, 12);
+      const revisionHash = createHash('sha256').update(urls.join('\n'));
+      for (const url of urls) {
+        revisionHash.update(readFileSync(resolve(outputDirectory, outputFileForUrl(url))));
+      }
+      const revision = revisionHash.digest('hex').slice(0, 12);
       const source = `const CACHE='revision-receipts-${revision}';
 const SHELL=${JSON.stringify(urls)};
 self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(SHELL)).then(()=>self.skipWaiting())));

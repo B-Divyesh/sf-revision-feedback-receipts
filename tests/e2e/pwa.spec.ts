@@ -13,7 +13,15 @@ test('production service worker precaches emitted files, updates, and serves off
   test.skip(testInfo.project.name === 'mobile', 'The production service worker is covered once in Chromium; mobile uses the same shell.');
 
   const shell = precacheUrls();
+  const staleCandidateUrls = [
+    '/assets/privacy-CSUSwM90.js',
+    '/assets/terms-CSUSwM90.js',
+    '/assets/legal-CYClypZu.js',
+    '/assets/legal-CYClypZu.js.map',
+  ];
+  expect(shell.filter((url) => staleCandidateUrls.includes(url))).toEqual([]);
   expect(shell).not.toContainEqual(expect.stringMatching(/\.map$/));
+  expect(new Set(shell).size).toBe(shell.length);
   expect(shell.length).toBeGreaterThan(8);
   for (const url of shell) {
     const outputPath = resolve('dist', url === '/' ? 'index.html' : url.endsWith('/') ? `${url.slice(1)}index.html` : url.slice(1));
