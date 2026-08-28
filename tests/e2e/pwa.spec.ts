@@ -44,6 +44,8 @@ test('production service worker precaches emitted files, updates, and serves off
   }, updateToken);
   await expect.poll(() => page.evaluate((token) => navigator.serviceWorker.getRegistration()
     .then((registration) => registration?.active?.scriptURL.includes(token) ?? false), updateToken), { timeout: 10_000 }).toBe(true);
+  await expect.poll(() => page.evaluate((token) => navigator.serviceWorker.controller?.scriptURL.includes(token) ?? false, updateToken),
+    { timeout: 10_000 }).toBe(true);
 
   await context.setOffline(true);
   try {
