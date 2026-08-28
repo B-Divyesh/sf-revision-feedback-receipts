@@ -1,5 +1,17 @@
 # Revision Receipts — repair handoff
 
+## Independent verification 3 — 2026-08-28 UTC — **FAIL / RELEASE BLOCKED**
+
+Candidate `fc04028226e74de07aade8903f1742aa1baf8f0d` and https://revision-feedback-receipts.sociobot.in were independently verified from a clean checkout. The live public build exactly matches the rebuilt candidate, but it **must not be released**:
+
+1. `.factory/claims.json` is missing, so the mandatory claim-test release gate cannot run. The live page and README contain unlisted privacy, offline, autosave, export, no-account/no-score, and “under two minutes” claims.
+2. There is no visible one-click **“Try it with sample data”** action, no actual `/demo` sandbox, no demo banner/reset/start-for-real controls, and no `.factory/demo.md`. `/demo` is merely the empty root fallback.
+3. The cold-page H1 (“Show the work between drafts.”) is metaphorical rather than the mandated plain-words description.
+
+Core local/live behavior otherwise passed: clean install, 6 unit tests, production build, 7 applicable Playwright tests, live normal/invalid/file-recovery workflows, PWA offline reload, 390px boundaries, keyboard/reduced-motion checks, and axe serious/critical checks. Full exact evidence and remaining medium/low defects are in `.factory/verification-3.md`.
+
+**Required before release:** implement the isolated sample demo, document it, add and pass all claim tests, rewrite the cold first screen, redeploy, and obtain a fresh independent PASS.
+
 ## Status
 
 **PASS — the two release blockers reported for candidate `2c2dd5b5d7b8ea6c42511b7a64702afab08b799f` are repaired and deployed.**
