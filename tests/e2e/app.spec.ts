@@ -14,19 +14,32 @@ test('creates a complete student revision receipt', async ({ page }, testInfo) =
   await page.getByLabel('Student name').fill('Jordan K.');
   await page.getByLabel('Assignment').fill('Community park argument');
   await page.getByLabel('Feedback goal 1').fill('Use specific evidence to support the claim');
+  await page.getByRole('button', { name: 'Add another goal' }).click();
+  await page.getByLabel('Feedback goal 2', { exact: true }).fill('Explain how the evidence connects to the claim');
   await page.getByLabel('First draft text').fill('Our town needs a park. Parks are good. This would help everyone.');
-  await page.getByLabel('Revised draft text').fill('Our town needs a park. A 2025 survey found that 68 percent of residents lack a nearby green space. This would help everyone. The evidence makes the need concrete.');
+  await page.locator('#revised-file').setInputFiles({
+    name: 'revision.md',
+    mimeType: 'text/markdown',
+    buffer: Buffer.from('Our town needs a park. A 2025 survey found that 68 percent of residents lack a nearby green space. This would help everyone. The evidence makes the need concrete.'),
+  });
   await page.getByRole('button', { name: 'Find changed passages' }).click();
 
   await expect(page.getByRole('heading', { name: 'Connect change to intention' })).toBeVisible();
   await expect(page.locator('.change-card')).toHaveCount(2);
-  await page.getByLabel('Strongest changed passage').selectOption('change-1');
-  await page.getByLabel('What did you change, and why?').fill('I replaced a vague statement with survey evidence so the claim is supported by a specific fact.');
+  await page.getByLabel('Strongest changed passage').nth(0).selectOption('change-1');
+  await page.getByLabel('Strongest changed passage').nth(1).selectOption('change-2');
+  await page.getByLabel('What did you change, and why?').nth(0).fill('I replaced a vague statement with survey evidence so the claim is supported by a specific fact.');
+  await page.getByLabel('What did you change, and why?').nth(1).fill('I added a final sentence that explains why the evidence matters to the town.');
   await page.getByRole('button', { name: 'Finish the receipt' }).click();
 
   await expect(page.getByRole('heading', { name: 'Ready for review' })).toBeVisible();
-  await expect(page.locator('.receipt-goal')).toContainText('survey evidence');
+  await expect(page.locator('.receipt-goal')).toHaveCount(2);
+  await expect(page.locator('.receipt-goal').first()).toContainText('survey evidence');
   await expect(page.getByRole('button', { name: 'Download receipt' })).toBeVisible();
+  const downloadPromise = page.waitForEvent('download');
+  await page.getByRole('button', { name: 'Download receipt' }).click();
+  const download = await downloadPromise;
+  expect(download.suggestedFilename()).toBe('jordan-k-community-park-argument-receipt.html');
 
   if (testInfo.project.name === 'chromium') {
     const results = await new AxeBuilder({ page }).exclude('.hero-art').analyze();
