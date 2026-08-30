@@ -114,6 +114,7 @@ test('@claim:receipt-export The sample exports a portable HTML receipt', async (
   const file = await readFile((await download.path())!, 'utf8');
   expect(file).toContain('A 2025 survey found that 68 percent of residents lack a nearby green space.');
   expect(file).toContain('I added a sentence that explains why the survey matters to the town.');
+  expect(file).toContain('<h1>Revision receipt for Jordan K.</h1>');
   expect(file).not.toMatch(/<script|https?:\/\//i);
 });
 

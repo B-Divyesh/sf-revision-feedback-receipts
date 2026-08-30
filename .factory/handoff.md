@@ -1,102 +1,47 @@
-# Revision Receipts — adversarial review 1 handoff
-
-## Review result
-
-**FAIL.** The review is recorded in `.factory/review-1.md`. No product code was modified.
-
-The blocking defect is the 390×844 cold landing screen: a vertically oversized, image-first hero pushes the H1 to 1,056 px and the sample action to 1,291 px. A phone visitor therefore cannot determine the job, audience, or first action before scrolling. The demo itself is realistic and isolated once entered; all ten declared claim commands pass. The report also records a false Start-for-real documentation statement, a missing visible demo H1, unlisted/broad claims, route-focus behavior, and five copy/terminology issues.
-
-## Verification performed
-
-```text
-npm ci
-npm run test:claims
-npm test
-npm run lint
-npm run typecheck
-npm run build
-npm run test:e2e -- --reporter=list
-```
-
-Results: all ten declared claims passed; 6 unit tests passed; lint, typecheck, and build passed; full browser suite passed 27 tests with 3 intentional project skips. Live 390 px and desktop cold loads, demo storage isolation/reset/exit, same-origin request capture, offline claim behavior, route metadata, unknown-route 404, internal-link crawl, back/deep links, console capture, and axe scans were checked. See `.factory/review-1.md` for exact evidence and all 15 findings.
-
-## Scope and next step
-
-Only `.factory/review-1.md` and this handoff were changed. The next worker should fix every finding, add the specified mobile/H1/focus/claim regressions, redeploy, and rerun the full review from scratch.
-
----
-
-# Earlier repair handoff (preserved for history)
-
-## Independent verification 4
-
-**PASS — accepted at `e4ecde30fd730af6509af145cc47bb93b871a73e`.** On 2026-08-30 UTC, an independent clean-clone verifier ran every one of the ten declared `.factory/claims.json` commands first, then unit, lint, type, production-build, full Playwright, audit, live desktop/390 px, privacy/request, header/cache, offline-update, accessibility, link, and artifact-identity checks. All passed. The deployed URL is https://revision-feedback-receipts.sociobot.in/ and its 18 fetchable generated artifacts SHA-256 match the rebuilt candidate. There are **no known defects by severity**. Full exact evidence is in `.factory/verification-4.md`.
+# Revision Receipts — polish round 1 handoff
 
 ## Status
 
-**PASS — repaired, verified, and deployed.**
+**PASS — all findings resolved, pushed, deployed, and checked cold on the live site.**
 
-- Work order: `revision-feedback-receipts-repair-4`
-- Verification report commit repaired: `cf78e7bb72fc7a001af0246612284dac41ccead9`
-- Candidate reviewed: `fc04028226e74de07aade8903f1742aa1baf8f0d`
-- Artifact/deployment class: unchanged `static-web` / Azure Static Web Apps (`dist/` site root)
-- Repair commits: `1b005108acb7c20834259857c51bc64309e0cde6` and `a06e88b6d1d26cc832a87a8bd093ca4b08cea7c8`.
+- Work order: `revision-feedback-receipts-polish-1`
+- Candidate repaired: `e4ecde30fd730af6509af145cc47bb93b871a73e`
+- Review commit: `16699b1a073cb0c6cb23b2bca2551f2a26a4fa2d`
+- Deployed product commit: `effb432`
+- Live site: <https://revision-feedback-receipts.sociobot.in/>
+- Artifact/deployment class: unchanged `static-web`; Vite output remains `dist/`; Azure Static Web Apps deployment succeeded.
 
-## Findings reproduced and repaired
+## What changed
 
-### Missing claim contract
+The 390×844 first screen now presents the job, audience, sample action, result sentence, and all three facts before the artwork. The first-screen sample action opens the isolated `?demo=1` path. Demo mode has one visible H1, a valid heading outline, realistic sample data, a persistent banner, Reset demo, and Start for real. Demo and real work remain in separate local-storage namespaces.
 
-The reported failure was reproduced before editing: `/demo` returned the empty root workspace, its title was `Revision Receipts — Show what changed`, the cold H1 was `Show the work between drafts.`, the sample CTA/banner were absent, and no `.factory/claims.json` existed.
+All reviewed copy was made literal and consistent. The vague privacy chip, abstract headings, footer jargon, service-worker jargon, storage jargon, false empty-workspace statement, imprecise Node range, and “teacher goals” drift are gone. The exported receipt now names the student in its H1.
 
-`.factory/claims.json` now declares ten observable claims. Each has one exact `@claim:<id>` Playwright test from a clean `/demo` entry point. `npm run test:claims` builds once and runs all ten declared commands separately. Coverage includes the demo boundary, no-account receipt creation, the two-draft/goals/reflection workflow, same-origin browser-only data flow, local autosave, portable HTML export, no-score/human-review limits, source-only receipt text, and controlled offline reload.
+The claim contract now has 13 claims. New tests cover free use, no plagiarism detection, and destructive clearing of real work without touching demo data. Cross-route focus moves to the new H1 and is restored on browser history navigation. Node engines and CI use the supported runtime range.
 
-### One-click isolated demo and plain first screen
+The live verifier initially exposed a hidden second H1 on `/`. That heading was removed from static HTML and is now created only in demo mode. The fix was committed, pushed, redeployed, and rechecked: `/` and `/?demo=1` each have exactly one H1.
 
-`/demo` is now a built static page (`dist/demo/index.html`) with Azure routing for the no-trailing-slash URL. It starts with a realistic Jordan K. community-park argument, two feedback goals, detected passages, selected evidence, and reflections. The persistent **Demo — sample data, nothing is saved** banner supplies **Reset demo** and **Start for real**.
+The complete finding-by-finding mapping is in `.factory/polish-1.md`.
 
-Demo data uses only `demo:revision-receipts-work-v1`; real work remains under `revision-receipts-work-v1`. Reset restores the shipped sample. Start-for-real deletes only the demo key. Demo mode removes the marketing hero so the first mobile viewport immediately shows populated product fields. `.factory/demo.md` documents the URL, sample, namespace, and controls.
+## Verification
 
-The landing H1 is now the plain-words **Create receipts from draft changes.** The first primary action is **Try it with sample data**, followed by a clear result sentence. The untestable “under two minutes” statement was removed. `.factory/copy-audit.md` records landing sentence word counts, banned-word review, and terminology.
+From a clean clone at `/tmp/revision-receipts-clean.1PSvlV`:
 
-### Every remaining verification gap
-
-- Added a designed `404.html`, Azure 404 response override, and an end-to-end regression for its title, H1, return link, and configuration. The final live check found that Azure's SPA `navigationFallback` still made unknown paths return 200. Removing that unnecessary fallback produces the intended HTTP 404 while preserving all explicit static routes; the regression now also asserts that the fallback cannot be reintroduced.
-- Added canonical, Open Graph, Twitter-card, Apple touch icon, and route-specific titles for home, demo, privacy, terms, and 404. Added the social preview derivative with design provenance.
-- Added a consistent footer on every route with the product one-liner, Demo/Privacy/Terms, Param Factory attribution, and build ID.
-- Added real ESLint plus explicit `typecheck` and `test:claims` scripts.
-- Strengthened the PWA fetch policy: precached assets are matched with `ignoreVary` (so Vary-bearing module requests work offline), and only navigation requests receive an HTML fallback. Demo navigations use the cached demo shell. The offline regression owns its own browser context, proves worker activation, query-versioned update/controller takeover, and an offline demo reload.
-- Preserved all previously passing workflows: validation/recovery, text/Markdown file handling, safe escaped download, local persistence, boundary wrapping, desktop/mobile layouts, keyboard controls, and reduced motion.
-
-## Final verification evidence
-
-Run from a clean install on 2026-08-30 UTC:
-
-```bash
-npm ci
-npm audit --omit=dev --audit-level=high
-npm test
-npm run lint
-npm run typecheck
-npm run build
-npm run test:e2e -- --reporter=list
-npm run test:claims
-git diff --check
+```text
+npm ci                                            PASS — 161 packages, 0 vulnerabilities
+npm audit --omit=dev --audit-level=high           PASS — 0 vulnerabilities
+npm run test:claims                               PASS — all 13 declared commands
+npm test                                          PASS — 6/6
+npm run lint                                      PASS
+npm run typecheck                                 PASS
+npm run build                                     PASS — dist/ produced
+npm run test:e2e -- --reporter=list               PASS — 35 passed, 5 intentional project skips
+git diff --check                                  PASS
 ```
 
-Results:
+The final post-deploy H1 change additionally passed lint, typecheck, build, the metadata/demo/404 test, the 390×844 first-screen test, and the route-focus test. The receipt-export and reviewed-copy contract tests also passed after the final documentation update.
 
-- `npm ci`: 161 packages installed; `npm audit --omit=dev --audit-level=high`: 0 vulnerabilities.
-- Unit: 6/6 Vitest tests passed.
-- Lint and strict TypeScript: passed.
-- Production build: passed; `dist/index.html`, `dist/demo/index.html`, and `dist/404.html` exist.
-- Browser suite: 27 passed, 3 intentional project skips (desktop-only static legal/PWA checks and mobile-only boundary check); desktop and 390×844 mobile both exercised.
-- Claim suite: all ten declared claim commands passed; the dedicated offline test has one intentional mobile-project skip because it owns one Chromium browser context.
-- `git diff --check`: passed.
-- Package/consumer check: not applicable to this static website.
-
-The final local browser verification on `http://127.0.0.1:4175/` recorded HTTPS-class page checks with no console/page errors: title present, `lang=en`, one H1, one main landmark, no missing image alts, and no unlabeled buttons. The root test also proves the first Tab reaches the skip link and Enter moves focus into `main`. Axe via `@axe-core/playwright` found zero serious/critical violations on the receipt, privacy page, terms page, landing page, demo page, and 404 page.
-
-Lighthouse 12.8.2 simulated-mobile against the final local production build:
+Lighthouse 12.8.2 simulated-mobile results:
 
 | Category | Score |
 | --- | ---: |
@@ -105,27 +50,21 @@ Lighthouse 12.8.2 simulated-mobile against the final local production build:
 | Best practices | 100 |
 | SEO | 100 |
 
-FCP was 0.9 s, LCP 1.4 s, TBT 0 ms, CLS 0, and total transfer 47 KiB. The initial application JS is 18,492 bytes (6,647 gzip); app CSS is 16,460 bytes (4,236 gzip); mobile hero is 29,842 bytes. All are below the static-product budgets.
+FCP was 0.9 s, LCP 1.4 s, TBT 0 ms, and CLS 0. Initial application JavaScript is 19.45 kB raw / 6.88 kB gzip; CSS is 17.03 kB raw / 4.35 kB gzip. Both remain far below the static-product budgets.
 
-The browser-only claim records every demo workflow request and permits only the same local origin. There are no analytics, remote fonts, third-party scripts, or classroom-data endpoints. Local response-policy source is `public/staticwebapp.config.json`: self-only CSP with `frame-ancestors 'none'`, strict-origin referrer policy, `nosniff`, restrictive permissions policy, immutable assets, no-cache service worker, `/demo` rewrite, and a real 404 override.
+Live cold checks on 2026-08-30 UTC confirmed:
 
-Final selected build hashes:
+- Mobile first-screen content ends at 550 px in an 844 px viewport; width is exactly 390 px with no overflow.
+- Root and query demo each have one H1, correct titles/canonicals, `lang=en`, one main landmark, no missing alt text, no unlabeled buttons, and no console errors.
+- Demo reset restores Jordan K.; Start for real restores seeded real work and deletes only demo storage.
+- All captured workflow requests are same-origin.
+- Route focus and back-navigation focus land on H1; legal titles are route-specific; unknown routes return the designed HTTP 404.
+- Live axe scans found zero serious or critical violations on root, demo, privacy, terms, and 404.
+- The controlled demo reloads offline with its sample present.
+- CSP, Referrer-Policy, X-Content-Type-Options, and Permissions-Policy headers are present.
 
-- `dist/index.html`: `0eaa302f3320a621c55ec95ccb5d8e779d186d0bed18fe7a7d2851e675a5932b`
-- `dist/demo/index.html`: `48255349ba93984e3695c84b368869997bdd2ec41bffb2649d166781a602184b`
-- `dist/sw.js`: `c4f7eb738216aad30471325ce11f3998e89ef31d8bfbabedb9f1cd89b3a5e159`
-- `dist/404.html`: `012e5ce08d7c34d6df4c2c552699561f6a813c1938829d006569a28445c00954`
+Evidence is under `.factory/evidence/`, including live screenshots, verifier JSON, the live finding audit, offline result, and Lighthouse JSON.
 
-## Known limits
+## Known gaps and next steps
 
-The diff is deterministic sentence/line comparison, not semantic analysis. Textual change remains evidence for a human conversation, not proof of learning, authorship, causation, or quality. Work does not sync across browsers or devices. Only plain-text and Markdown drafts are accepted. Offline use begins after one successful online visit.
-
-## Deployment and post-deploy check
-
-Deployed the final `dist/` with the static-work-app work-order configuration on 2026-08-30 UTC.
-
-- Final deployment ID: `741046c6-c1b4-4823-aafc-ee84dd08c586`.
-- Live root: `https://revision-feedback-receipts.sociobot.in/` returned 200 in 790 ms with no console errors, a title, `lang=en`, one H1, a main landmark, no missing image alts, and no unlabeled buttons.
-- Live routes: `/demo`, `/privacy`, and `/terms` each returned 200. `/not-a-real-page` returned **404** with title `Page not found — Revision Receipts`.
-- Live response policy confirmed HSTS, `strict-origin-when-cross-origin`, `nosniff`, self-only CSP with `frame-ancestors 'none'`, and the restrictive camera/microphone/geolocation permissions policy.
-- Byte identity: all 18 selected local build files (pages, manifest, PWA worker, icons, images, CSS, and JavaScript) matched the custom-domain responses by SHA-256.
+None. No blocking, major, or minor finding remains, and no follow-up work is deferred.

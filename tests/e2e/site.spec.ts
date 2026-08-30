@@ -96,3 +96,25 @@ test('moves focus to page headings across links and browser history', async ({ p
   await page.goBack();
   await expect(page.getByRole('heading', { level: 1 })).toBeFocused();
 });
+
+test('keeps reviewed copy and documentation precise', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.getByText('Drafts stay in this browser', { exact: true })).toBeVisible();
+  await expect(page.getByText('Private by default', { exact: true })).toHaveCount(0);
+  await expect(page.getByText('Keep one to three feedback goals beside the drafts.', { exact: true })).toBeVisible();
+  await expect(page.getByText('Compare two drafts and save a revision receipt.', { exact: true })).toBeVisible();
+
+  const readme = await readFile('README.md', 'utf8');
+  const demo = await readFile('.factory/demo.md', 'utf8');
+  const packageJson = JSON.parse(await readFile('package.json', 'utf8')) as { engines?: { node?: string } };
+  for (const document of [readme, demo]) {
+    expect(document).toContain('Start for real** deletes the demo copy and opens your saved browser work.');
+    expect(document).toContain('If none exists, it opens a blank receipt.');
+    expect(document).not.toContain('returns to the empty tool');
+    expect(document).not.toContain('opens the empty real workspace');
+  }
+  expect(readme).toContain('The sample is stored separately from your own work.');
+  expect(readme).toContain('The build caches the site files needed for offline use.');
+  expect(readme).toContain('Requires Node.js 20.19+ or 22.12+.');
+  expect(packageJson.engines?.node).toBe('^20.19.0 || >=22.12.0');
+});

@@ -1,0 +1,93 @@
+{
+  "checkedAt": "2026-08-30T02:49:52.830Z",
+  "origin": "https://revision-feedback-receipts.sociobot.in",
+  "mobileFirstScreen": {
+    "Create receipts from draft changes.": {
+      "bottom": 226,
+      "withinViewport": true
+    },
+    "For writing teachers who need a quick record of how students used feedback.": {
+      "bottom": 292,
+      "withinViewport": true
+    },
+    "Try it with sample data": {
+      "bottom": 354,
+      "withinViewport": true
+    },
+    "Loads a completed sample; your real browser work stays separate.": {
+      "bottom": 461,
+      "withinViewport": true
+    },
+    "Drafts are compared in this browser.": {
+      "bottom": 495,
+      "withinViewport": true
+    },
+    "No account needed.": {
+      "bottom": 523,
+      "withinViewport": true
+    },
+    "No automatic score.": {
+      "bottom": 550,
+      "withinViewport": true
+    },
+    "h1Count": 1,
+    "scrollWidth": 390,
+    "demoHref": "/?demo=1"
+  },
+  "demo": {
+    "url": "https://revision-feedback-receipts.sociobot.in/?demo=1",
+    "title": "Demo — Revision Receipts",
+    "h1Count": 1,
+    "visibleH1": "Try a completed revision receipt",
+    "banner": true,
+    "sampleName": "Jordan K.",
+    "canonical": "https://revision-feedback-receipts.sociobot.in/demo",
+    "headingLevels": [
+      1,
+      2,
+      2,
+      2,
+      3,
+      3,
+      3,
+      3
+    ],
+    "resetName": "Jordan K.",
+    "startForRealName": "Existing real student",
+    "demoStorageAfterExit": null
+  },
+  "sameOriginOnly": true,
+  "consoleErrors": [],
+  "axe": [
+    {
+      "path": "/",
+      "seriousOrCritical": []
+    },
+    {
+      "path": "/?demo=1",
+      "seriousOrCritical": []
+    },
+    {
+      "path": "/privacy/",
+      "seriousOrCritical": []
+    },
+    {
+      "path": "/terms/",
+      "seriousOrCritical": []
+    },
+    {
+      "path": "/404.html",
+      "seriousOrCritical": []
+    }
+  ],
+  "routing": {
+    "privacyTitle": "Privacy — Revision Receipts",
+    "privacyFocused": true,
+    "privacyCanonical": "https://revision-feedback-receipts.sociobot.in/privacy/",
+    "backFocused": true,
+    "termsTitle": "Terms — Revision Receipts",
+    "unknownStatus": 404,
+    "unknownTitle": "Page not found — Revision Receipts",
+    "unknownH1": "This page does not exist"
+  }
+}

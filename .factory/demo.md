@@ -13,5 +13,5 @@ The demo opens a completed evidence workspace for Jordan K.’s *Community park 
 The demo uses only the browser-local `demo:revision-receipts-work-v1` key. It never reads or writes the real workspace key, `revision-receipts-work-v1`.
 
 - **Reset demo** restores the shipped sample in the demo namespace.
-- **Start for real** deletes the demo copy and opens your existing browser workspace, or a blank receipt if you have no saved work.
+- **Start for real** deletes the demo copy and opens your saved browser work. If none exists, it opens a blank receipt.
 - Leaving the demo does not copy sample text into real work.

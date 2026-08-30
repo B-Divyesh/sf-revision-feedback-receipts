@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#d9ff57" />
+    <meta name="description" content="Compare two drafts with teacher feedback goals and create a student revision receipt in your browser." />
+    <link rel="canonical" href="https://revision-feedback-receipts.sociobot.in/" />
+    <link rel="icon" href="/mark.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Revision Receipts" />
+    <meta property="og:title" content="Revision Receipts — Compare draft changes" />
+    <meta property="og:description" content="Compare two drafts with teacher feedback goals and create a student revision receipt in your browser." />
+    <meta property="og:url" content="https://revision-feedback-receipts.sociobot.in/" />
+    <meta property="og:image" content="https://revision-feedback-receipts.sociobot.in/assets/receipt-social.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Revision Receipts — Compare draft changes" />
+    <meta name="twitter:description" content="Compare two drafts with teacher feedback goals and create a student revision receipt in your browser." />
+    <meta name="twitter:image" content="https://revision-feedback-receipts.sociobot.in/assets/receipt-social.jpg" />
+    <title>Revision Receipts — Compare draft changes</title>
+    <script type="module" crossorigin src="/assets/index-ByIZMuTj.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/route-focus-QEMOlQLO.js">
+    <link rel="stylesheet" crossorigin href="/assets/index-BDU9i9pR.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to main content</a>
+    <div id="offline-banner" class="offline-banner" role="status" hidden>
+      You’re offline. The tool still works; exports stay on this device.
+    </div>
+    <aside id="demo-banner" class="demo-banner" aria-label="Demo controls" hidden>
+      <p><strong>Demo — sample data, nothing is saved</strong><span> Use the sample receipt without changing your own browser work.</span></p>
+      <div><button id="reset-demo" class="demo-control" type="button">Reset demo</button><a id="start-real" class="demo-control" href="/">Start for real</a></div>
+    </aside>
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="Revision Receipts home">
+        <img src="/mark.svg" width="44" height="44" alt="" />
+        <span>Revision<br />Receipts</span>
+      </a>
+      <nav aria-label="Main navigation">
+        <a href="/demo">Try the demo</a>
+        <a href="#make-receipt">Make a receipt</a>
+        <a href="/privacy/">Privacy</a>
+      </nav>
+      <span class="privacy-chip">Drafts stay in this browser</span>
+    </header>
+
+    <main id="main" tabindex="-1">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow"><span>Classroom tool</span> / No AI writing</p>
+          <h1 id="hero-title">Create receipts from draft changes.</h1>
+          <p class="hero-lede">For writing teachers who need a quick record of how students used feedback.</p>
+          <div class="hero-actions"><a class="button button-primary" href="/?demo=1">Try it with sample data <span aria-hidden="true">→</span></a><a class="button button-secondary" href="#make-receipt">Start a blank receipt <span aria-hidden="true">↓</span></a></div>
+          <p class="hero-action-note">Loads a completed sample; your real browser work stays separate.</p>
+          <ul class="hero-facts" aria-label="Product facts">
+            <li><span aria-hidden="true">●</span> Drafts are compared in this browser.</li>
+            <li><span aria-hidden="true">●</span> No account needed.</li>
+            <li><span aria-hidden="true">●</span> No automatic score.</li>
+          </ul>
+        </div>
+        <figure class="hero-art">
+          <picture>
+            <source media="(max-width: 700px)" srcset="/assets/hero-receipt-768.webp" />
+            <img src="/assets/hero-receipt-1280.webp" srcset="/assets/hero-receipt-768.webp 768w, /assets/hero-receipt-1280.webp 1280w" sizes="(max-width: 700px) 100vw, 50vw" width="1280" height="853" alt="Marked-up paper drafts beside a blank receipt strip, red pencil, and lime highlighter" fetchpriority="high" decoding="async" />
+          </picture>
+          <figcaption>Before-and-after evidence</figcaption>
+        </figure>
+      </section>
+
+      <section class="trust-strip" aria-label="Product principles">
+        <p><strong>01</strong> No account needed</p>
+        <p><strong>02</strong> No automatic score</p>
+        <p><strong>03</strong> Export an HTML receipt</p>
+      </section>
+
+      <section id="make-receipt" class="workspace" aria-labelledby="workspace-title">
+        <div class="section-intro">
+          <p class="kicker">Revision receipt</p>
+          <h2 id="workspace-title">Make a revision receipt in three steps.</h2>
+          <p>Unfinished work saves in this browser as you type. Required fields are marked <span aria-hidden="true">*</span><span class="sr-only">with an asterisk</span>.</p>
+        </div>
+
+        <ol class="step-list" aria-label="Receipt workflow">
+          <li><a href="#step-context"><span>1</span> Set goals</a></li>
+          <li><a href="#step-drafts"><span>2</span> Compare drafts</a></li>
+          <li><a href="#step-evidence"><span>3</span> Explain evidence</a></li>
+        </ol>
+
+        <form id="receipt-form" novalidate>
+          <section id="step-context" class="work-step" aria-labelledby="context-title">
+            <header class="step-heading">
+              <span class="step-number" aria-hidden="true">01</span>
+              <div>
+                <p class="kicker">Teacher or student</p>
+                <h2 id="context-title">Name the work and goals</h2>
+              </div>
+            </header>
+
+            <div class="field-grid">
+              <div class="field">
+                <label for="student-name">Student name <span aria-hidden="true">*</span></label>
+                <input id="student-name" name="studentName" autocomplete="name" required maxlength="80" />
+                <p class="field-hint">Use initials if your classroom policy prefers.</p>
+              </div>
+              <div class="field">
+                <label for="assignment-name">Assignment <span aria-hidden="true">*</span></label>
+                <input id="assignment-name" name="assignmentName" required maxlength="120" />
+                <p class="field-hint">Example: Argument essay, draft 2</p>
+              </div>
+            </div>
+
+            <fieldset class="goals-fieldset">
+              <legend>Feedback goals <span aria-hidden="true">*</span></legend>
+              <p class="field-hint">Add up to three specific goals from the teacher’s feedback.</p>
+              <div id="goal-list" class="goal-list"></div>
+              <button id="add-goal" class="button button-secondary compact" type="button">+ Add another goal</button>
+            </fieldset>
+          </section>
+
+          <section id="step-drafts" class="work-step" aria-labelledby="drafts-title">
+            <header class="step-heading">
+              <span class="step-number" aria-hidden="true">02</span>
+              <div>
+                <p class="kicker">Student</p>
+                <h2 id="drafts-title">Put the drafts side by side</h2>
+              </div>
+            </header>
+            <div class="draft-grid">
+              <div class="draft-sheet">
+                <div class="draft-label"><span>A</span> First draft</div>
+                <label class="sr-only" for="original-draft">First draft text</label>
+                <textarea id="original-draft" name="originalDraft" rows="14" required spellcheck="true" placeholder="Paste the draft before feedback here…"></textarea>
+                <div class="draft-tools">
+                  <label class="file-button" for="original-file"><span>Choose .txt or .md</span><input id="original-file" class="file-input" type="file" accept=".txt,.md,text/plain,text/markdown" data-target="original-draft" /></label>
+                  <span id="original-count" class="word-count">0 words</span>
+                </div>
+              </div>
+              <div class="draft-sheet revised">
+                <div class="draft-label"><span>B</span> Revised draft</div>
+                <label class="sr-only" for="revised-draft">Revised draft text</label>
+                <textarea id="revised-draft" name="revisedDraft" rows="14" required spellcheck="true" placeholder="Paste the draft after feedback here…"></textarea>
+                <div class="draft-tools">
+                  <label class="file-button" for="revised-file"><span>Choose .txt or .md</span><input id="revised-file" class="file-input" type="file" accept=".txt,.md,text/plain,text/markdown" data-target="revised-draft" /></label>
+                  <span id="revised-count" class="word-count">0 words</span>
+                </div>
+              </div>
+            </div>
+            <p class="privacy-callout"><strong>Local-only:</strong> these drafts are compared on your device. We cannot see, recover, or grade them.</p>
+            <div id="form-errors" class="error-summary" role="alert" tabindex="-1" hidden></div>
+            <button class="button button-primary action-wide" type="submit">Find changed passages <span aria-hidden="true">→</span></button>
+          </section>
+        </form>
+
+        <section id="step-evidence" class="work-step evidence-step" aria-labelledby="evidence-title" hidden>
+          <header class="step-heading">
+            <span class="step-number" aria-hidden="true">03</span>
+            <div>
+              <p class="kicker">Student, then teacher</p>
+              <h2 id="evidence-title">Explain why each passage changed</h2>
+            </div>
+          </header>
+          <div id="comparison-summary" class="comparison-summary" aria-live="polite"></div>
+          <p class="evidence-instruction">Review the detected changes, then choose the strongest passage for each goal and explain what you did. The tool finds textual change; it does not judge quality or learning.</p>
+          <div id="change-list" class="change-list"></div>
+          <form id="evidence-form" novalidate>
+            <div id="goal-evidence-list" class="goal-evidence-list"></div>
+            <div id="evidence-errors" class="error-summary" role="alert" tabindex="-1" hidden></div>
+            <button class="button button-primary action-wide" type="submit">Finish the receipt <span aria-hidden="true">✓</span></button>
+          </form>
+        </section>
+
+        <section id="receipt-output" class="receipt-output" aria-labelledby="receipt-title" hidden>
+          <div class="receipt-actions no-print">
+            <button id="download-receipt" class="button button-primary" type="button">Download receipt</button>
+            <button id="print-receipt" class="button button-secondary" type="button">Print / save PDF</button>
+            <button id="copy-summary" class="button button-secondary" type="button">Copy summary</button>
+          </div>
+          <article id="receipt" class="receipt-paper">
+            <header class="receipt-header">
+              <div>
+                <p class="receipt-brand">Revision receipt</p>
+                <h2 id="receipt-title">Review the finished revision receipt</h2>
+              </div>
+              <div class="status-stamp">Evidence<br />attached</div>
+            </header>
+            <dl id="receipt-meta" class="receipt-meta"></dl>
+            <div id="receipt-goals" class="receipt-goals"></div>
+            <footer class="receipt-caveat">
+              <strong>What this proves:</strong> Text changed and the student explained why. It is evidence for a conversation—not proof of learning, authorship, or quality.
+            </footer>
+          </article>
+          <button id="start-over" class="text-button no-print" type="button">Clear this device and start over</button>
+          <p id="action-status" class="action-status" aria-live="polite"></p>
+        </section>
+      </section>
+
+      <section id="how-it-works" class="how-section" aria-labelledby="how-title">
+        <div>
+          <p class="kicker">How it works</p>
+          <h2 id="how-title">Make a revision receipt in three steps.</h2>
+        </div>
+        <ol>
+          <li><span>01</span><div><h3>Set feedback goals</h3><p>Keep one to three feedback goals beside the drafts.</p></div></li>
+          <li><span>02</span><div><h3>Compare the drafts</h3><p>Choose the before-and-after passage that best fits each goal.</p></div></li>
+          <li><span>03</span><div><h3>Record the student’s explanation</h3><p>Export a receipt for human review, not an automatic grade.</p></div></li>
+        </ol>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div><strong>Revision Receipts</strong><p>Compare two drafts and save a revision receipt.</p></div>
+      <nav aria-label="Footer navigation"><a href="/demo">Demo</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></nav>
+      <p class="asset-note">Original AI-generated hero artwork. Built by Param Factory · Build 2026.08.30.</p>
+    </footer>
+
+  </body>
+</html>

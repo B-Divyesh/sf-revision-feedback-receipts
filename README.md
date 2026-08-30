@@ -8,7 +8,7 @@ Live site: <https://revision-feedback-receipts.sociobot.in>
 
 ## Start with the sample
 
-Open <https://revision-feedback-receipts.sociobot.in/?demo=1> or choose **Try it with sample data** on the landing page. The sample uses Jordan K.’s community-park argument with two feedback goals, changed passages, and reflections. The sample is stored separately from your own work. **Reset demo** restores the sample. **Start for real** deletes the demo copy and opens your existing browser workspace, or a blank receipt if you have no saved work.
+Open <https://revision-feedback-receipts.sociobot.in/?demo=1> or choose **Try it with sample data** on the landing page. The sample uses Jordan K.’s community-park argument with two feedback goals, changed passages, and reflections. The sample is stored separately from your own work. **Reset demo** restores the sample. **Start for real** deletes the demo copy and opens your saved browser work. If none exists, it opens a blank receipt.
 
 The tool saves unfinished work in browser storage, exports a portable HTML receipt, and works offline after the first online visit. No account is needed. The receipt shows passages and reflections, not an automatic score. It does not generate writing, grade work, detect plagiarism, or determine authorship. Textual change is not proof of learning, authorship, or quality.
 
