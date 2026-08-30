@@ -98,6 +98,25 @@ function startForReal(): void {
   window.location.assign('/');
 }
 
+function showDemoIntro(): void {
+  const intro = document.createElement('div');
+  intro.id = 'demo-intro';
+  intro.className = 'demo-intro';
+  const kicker = document.createElement('p');
+  kicker.className = 'kicker';
+  kicker.textContent = 'Completed sample';
+  const heading = document.createElement('h1');
+  heading.id = 'demo-title';
+  heading.tabIndex = -1;
+  heading.textContent = 'Try a completed revision receipt';
+  const instruction = document.createElement('p');
+  instruction.textContent = 'Review Jordan’s changed passages and reflections, then finish or export the sample receipt.';
+  intro.append(kicker, heading, instruction);
+  const workspace = byId('make-receipt');
+  workspace.setAttribute('aria-labelledby', heading.id);
+  workspace.prepend(intro);
+}
+
 function setPhase(phase: Phase): void {
   state.phase = phase;
   byId('step-evidence').hidden = phase === 'drafts';
@@ -463,7 +482,7 @@ updateCounts();
 if (isDemo) {
   document.body.classList.add('demo-mode');
   document.querySelector('.hero')?.remove();
-  byId('demo-intro').hidden = false;
+  showDemoIntro();
   document.title = 'Demo — Revision Receipts';
   document.querySelector<HTMLLinkElement>('link[rel="canonical"]')?.setAttribute('href', 'https://revision-feedback-receipts.sociobot.in/demo');
   document.querySelector<HTMLMetaElement>('meta[property="og:title"]')?.setAttribute('content', 'Demo — Revision Receipts');

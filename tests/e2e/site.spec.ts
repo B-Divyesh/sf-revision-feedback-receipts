@@ -6,6 +6,7 @@ test('repairs the verifier landing, demo, metadata, and 404 findings', async ({ 
   await page.goto('/');
   await expect(page).toHaveTitle('Revision Receipts — Compare draft changes');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Create receipts from draft changes.');
+  await expect(page.locator('h1')).toHaveCount(1);
   await expect(page.getByRole('link', { name: 'Try it with sample data' })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Try it with sample data' })).toHaveAttribute('href', '/?demo=1');
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://revision-feedback-receipts.sociobot.in/');
