@@ -5,19 +5,20 @@ const REAL_STORAGE_KEY = 'revision-receipts-work-v1';
 const DEMO_STORAGE_KEY = 'demo:revision-receipts-work-v1';
 
 async function openCleanDemo(page: Page): Promise<void> {
-  await page.goto('/demo');
+  await page.goto('/?demo=1');
   await page.evaluate(([realKey, demoKey]) => {
     localStorage.removeItem(realKey);
     localStorage.removeItem(demoKey);
   }, [REAL_STORAGE_KEY, DEMO_STORAGE_KEY]);
   await page.reload();
   await expect(page).toHaveTitle('Demo — Revision Receipts');
-  await expect(page.getByRole('heading', { name: 'Connect change to intention' })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1, name: 'Try a completed revision receipt' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Explain why each passage changed' })).toBeVisible();
 }
 
 async function finishSampleReceipt(page: Page): Promise<void> {
   await page.getByRole('button', { name: 'Finish the receipt' }).click();
-  await expect(page.getByRole('heading', { name: 'Ready for review' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Review the finished revision receipt' })).toBeVisible();
 }
 
 test('@claim:demo-sandbox Try the sample without changing real browser work', async ({ page }) => {
@@ -27,7 +28,8 @@ test('@claim:demo-sandbox Try the sample without changing real browser work', as
     originalDraft: 'First.', revisedDraft: 'Second.', selections: [], reflections: [], phase: 'drafts',
   })), REAL_STORAGE_KEY);
 
-  await page.goto('/demo');
+  await page.getByRole('link', { name: 'Try it with sample data' }).click();
+  await expect(page).toHaveURL(/\?demo=1$/);
   await expect(page).toHaveTitle('Demo — Revision Receipts');
   await expect(page.getByText('Demo — sample data, nothing is saved', { exact: false })).toBeVisible();
   await expect(page.getByLabel('Student name')).toHaveValue('Jordan K.');
@@ -54,6 +56,19 @@ test('@claim:no-account A sample receipt needs no account', async ({ page }) => 
   await expect(page.getByRole('link', { name: /sign in|log in|create account/i })).toHaveCount(0);
   await finishSampleReceipt(page);
   await expect(page.locator('.receipt-goal')).toHaveCount(2);
+});
+
+test('@claim:free-use The sample can be completed and exported without payment', async ({ page }) => {
+  const requests: string[] = [];
+  page.on('request', (request) => requests.push(request.url()));
+  await openCleanDemo(page);
+  await expect(page.getByRole('link', { name: /buy|subscribe|pay|upgrade/i })).toHaveCount(0);
+  await expect(page.getByRole('button', { name: /buy|subscribe|pay|upgrade/i })).toHaveCount(0);
+  await finishSampleReceipt(page);
+  const downloadPromise = page.waitForEvent('download');
+  await page.getByRole('button', { name: 'Download receipt' }).click();
+  await downloadPromise;
+  expect(requests.some((url) => /billing|checkout|payment/i.test(url))).toBe(false);
 });
 
 test('@claim:revision-workflow The sample compares drafts against feedback goals and records reflections', async ({ page }) => {
@@ -126,4 +141,33 @@ test('@claim:no-writing-generation The receipt only quotes supplied draft passag
   await expect(receipt).toContainText('Parks are good.');
   await expect(receipt).toContainText('A 2025 survey found that 68 percent of residents lack a nearby green space.');
   await expect(receipt).toContainText('I replaced a vague statement with survey evidence so the claim uses a specific fact.');
+});
+
+test('@claim:no-plagiarism-detection The workflow produces no plagiarism check or result', async ({ page }) => {
+  await openCleanDemo(page);
+  await expect(page.getByRole('button', { name: /plagiarism/i })).toHaveCount(0);
+  await expect(page.getByRole('link', { name: /plagiarism/i })).toHaveCount(0);
+  await finishSampleReceipt(page);
+  await expect(page.locator('#receipt')).not.toContainText(/plagiarism/i);
+});
+
+test('@claim:clear-real-work Clearing real work preserves the demo namespace', async ({ page }) => {
+  const completeRealState = {
+    studentName: 'Real student', assignmentName: 'Real assignment', goals: ['Use evidence'],
+    originalDraft: 'The claim needs proof.', revisedDraft: 'The claim uses survey proof.',
+    selections: ['change-1'], reflections: ['I added survey proof.'], phase: 'receipt',
+  };
+  await page.goto('/');
+  await page.evaluate(({ realKey, demoKey, realState }) => {
+    localStorage.setItem(realKey, JSON.stringify(realState));
+    localStorage.setItem(demoKey, 'preserve-this-demo');
+  }, { realKey: REAL_STORAGE_KEY, demoKey: DEMO_STORAGE_KEY, realState: completeRealState });
+  await page.reload();
+  await expect(page.getByRole('heading', { name: 'Review the finished revision receipt' })).toBeVisible();
+  page.once('dialog', (dialog) => dialog.accept());
+  await page.getByRole('button', { name: 'Clear this device and start over' }).click();
+  await expect(page.getByLabel('Student name')).toHaveValue('');
+  await expect(page.evaluate(({ realKey, demoKey }) => ({
+    real: localStorage.getItem(realKey), demo: localStorage.getItem(demoKey),
+  }), { realKey: REAL_STORAGE_KEY, demoKey: DEMO_STORAGE_KEY })).resolves.toEqual({ real: null, demo: 'preserve-this-demo' });
 });

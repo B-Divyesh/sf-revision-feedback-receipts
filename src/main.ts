@@ -1,4 +1,5 @@
 import './styles.css';
+import './route-focus';
 import { analyzeDiff, type DiffResult, type PassageChange } from './diff';
 
 type Phase = 'drafts' | 'evidence' | 'receipt';
@@ -237,7 +238,7 @@ function renderComparison(): void {
     card.className = 'change-card';
     card.id = change.id;
     const header = document.createElement('header');
-    const heading = document.createElement('h4');
+    const heading = document.createElement('h3');
     heading.textContent = changeLabel(change);
     const count = document.createElement('span');
     count.className = 'change-kind';
@@ -260,7 +261,7 @@ function renderEvidenceForm(): void {
   state.goals.forEach((goal, index) => {
     const card = document.createElement('section');
     card.className = 'goal-evidence';
-    const heading = document.createElement('h4');
+    const heading = document.createElement('h3');
     const badge = document.createElement('span');
     badge.textContent = String(index + 1);
     heading.append(badge, document.createTextNode(goal));
@@ -383,7 +384,7 @@ function receiptHtml(): string {
     const change = findChange(state.selections[index]);
     return `<section><small>FEEDBACK GOAL ${index + 1}</small><h2>${escapeHtml(goal)}</h2><div class="evidence"><blockquote><b>BEFORE</b>${escapeHtml(change.before || 'No earlier passage')}</blockquote><blockquote class="after"><b>AFTER</b>${escapeHtml(change.after || 'Removed from the revision')}</blockquote></div><p><mark>Student reflection:</mark> ${escapeHtml(state.reflections[index])}</p></section>`;
   }).join('');
-  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Revision receipt — ${escapeHtml(state.studentName)}</title><style>*{box-sizing:border-box}body{max-width:850px;margin:40px auto;padding:0 20px;background:#f4f0e6;color:#171713;font:16px/1.5 Arial,sans-serif}main{min-width:0;background:#fffdf7;border:3px solid;padding:36px;box-shadow:8px 8px #171713}h1,h2{font-family:Arial Black,Arial,sans-serif;line-height:1.05}header{border-bottom:4px solid}.meta{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:20px 0}.meta div{min-width:0;border-bottom:1px solid}small,b{display:block;font-weight:900}section{min-width:0;padding:24px 0;border-bottom:2px dashed}.evidence{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}h2,.meta div,blockquote,section>p{overflow-wrap:anywhere}blockquote{min-width:0;margin:8px 0;padding:14px;border-left:5px solid #e63b2e;background:#faf4e7;font-family:Georgia,serif;white-space:pre-wrap}.after{border-color:#18754a;background:#f3f9e5}mark{background:#d9ff57;font-weight:700}.note{margin-top:28px;padding:14px;border:2px solid;background:#bde7f2}@media(max-width:600px){body{margin:20px auto;padding:0 12px}.meta,.evidence{grid-template-columns:minmax(0,1fr)}main{padding:20px 14px}}@media print{body{margin:0;background:#fff}main{border:0;box-shadow:none}}</style></head><body><main><header><small>REVISION RECEIPT</small><h1>Ready for review</h1></header><div class="meta"><div><small>STUDENT</small>${escapeHtml(state.studentName)}</div><div><small>ASSIGNMENT</small>${escapeHtml(state.assignmentName)}</div><div><small>CREATED</small>${escapeHtml(date)}</div></div>${sections}<p class="note"><b>WHAT THIS PROVES</b> Text changed and the student explained why. It is evidence for a conversation—not proof of learning, authorship, or quality.</p></main></body></html>`;
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Revision receipt — ${escapeHtml(state.studentName)}</title><style>*{box-sizing:border-box}body{max-width:850px;margin:40px auto;padding:0 20px;background:#f4f0e6;color:#171713;font:16px/1.5 Arial,sans-serif}main{min-width:0;background:#fffdf7;border:3px solid;padding:36px;box-shadow:8px 8px #171713}h1,h2{font-family:Arial Black,Arial,sans-serif;line-height:1.05}header{border-bottom:4px solid}.meta{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:20px 0}.meta div{min-width:0;border-bottom:1px solid}small,b{display:block;font-weight:900}section{min-width:0;padding:24px 0;border-bottom:2px dashed}.evidence{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}h2,.meta div,blockquote,section>p{overflow-wrap:anywhere}blockquote{min-width:0;margin:8px 0;padding:14px;border-left:5px solid #e63b2e;background:#faf4e7;font-family:Georgia,serif;white-space:pre-wrap}.after{border-color:#18754a;background:#f3f9e5}mark{background:#d9ff57;font-weight:700}.note{margin-top:28px;padding:14px;border:2px solid;background:#bde7f2}@media(max-width:600px){body{margin:20px auto;padding:0 12px}.meta,.evidence{grid-template-columns:minmax(0,1fr)}main{padding:20px 14px}}@media print{body{margin:0;background:#fff}main{border:0;box-shadow:none}}</style></head><body><main><header><small>REVISION RECEIPT</small><h1>Revision receipt for ${escapeHtml(state.studentName)}</h1></header><div class="meta"><div><small>STUDENT</small>${escapeHtml(state.studentName)}</div><div><small>ASSIGNMENT</small>${escapeHtml(state.assignmentName)}</div><div><small>CREATED</small>${escapeHtml(date)}</div></div>${sections}<p class="note"><b>WHAT THIS PROVES</b> Text changed and the student explained why. It is evidence for a conversation—not proof of learning, authorship, or quality.</p></main></body></html>`;
 }
 
 function downloadReceipt(): void {
@@ -461,8 +462,13 @@ updateCounts();
 
 if (isDemo) {
   document.body.classList.add('demo-mode');
+  document.querySelector('.hero')?.remove();
+  byId('demo-intro').hidden = false;
   document.title = 'Demo — Revision Receipts';
   document.querySelector<HTMLLinkElement>('link[rel="canonical"]')?.setAttribute('href', 'https://revision-feedback-receipts.sociobot.in/demo');
+  document.querySelector<HTMLMetaElement>('meta[property="og:title"]')?.setAttribute('content', 'Demo — Revision Receipts');
+  document.querySelector<HTMLMetaElement>('meta[property="og:url"]')?.setAttribute('content', 'https://revision-feedback-receipts.sociobot.in/demo');
+  document.querySelector<HTMLMetaElement>('meta[name="twitter:title"]')?.setAttribute('content', 'Demo — Revision Receipts');
   byId('demo-banner').hidden = false;
   byId('reset-demo').addEventListener('click', resetDemo);
   byId<HTMLAnchorElement>('start-real').addEventListener('click', (event) => {

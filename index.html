@@ -40,18 +40,22 @@
         <a href="#make-receipt">Make a receipt</a>
         <a href="/privacy/">Privacy</a>
       </nav>
-      <span class="privacy-chip">Private by default</span>
+      <span class="privacy-chip">Drafts stay in this browser</span>
     </header>
 
     <main id="main" tabindex="-1">
       <section class="hero" aria-labelledby="hero-title">
         <div class="hero-copy">
-          <p class="eyebrow"><span>Free classroom tool</span> / No AI writing</p>
+          <p class="eyebrow"><span>Classroom tool</span> / No AI writing</p>
           <h1 id="hero-title">Create receipts from draft changes.</h1>
           <p class="hero-lede">For writing teachers who need a quick record of how students used feedback.</p>
-          <div class="hero-actions"><a class="button button-primary" href="/demo">Try it with sample data <span aria-hidden="true">→</span></a><a class="button button-secondary" href="#make-receipt">Start a blank receipt <span aria-hidden="true">↓</span></a></div>
+          <div class="hero-actions"><a class="button button-primary" href="/?demo=1">Try it with sample data <span aria-hidden="true">→</span></a><a class="button button-secondary" href="#make-receipt">Start a blank receipt <span aria-hidden="true">↓</span></a></div>
           <p class="hero-action-note">Loads a completed sample; your real browser work stays separate.</p>
-          <p class="local-note"><span aria-hidden="true">●</span> Drafts are compared in this browser.</p>
+          <ul class="hero-facts" aria-label="Product facts">
+            <li><span aria-hidden="true">●</span> Drafts are compared in this browser.</li>
+            <li><span aria-hidden="true">●</span> No account needed.</li>
+            <li><span aria-hidden="true">●</span> No automatic score.</li>
+          </ul>
         </div>
         <figure class="hero-art">
           <picture>
@@ -69,6 +73,11 @@
       </section>
 
       <section id="make-receipt" class="workspace" aria-labelledby="workspace-title">
+        <div id="demo-intro" class="demo-intro" hidden>
+          <p class="kicker">Completed sample</p>
+          <h1 id="demo-title" tabindex="-1">Try a completed revision receipt</h1>
+          <p>Review Jordan’s changed passages and reflections, then finish or export the sample receipt.</p>
+        </div>
         <div class="section-intro">
           <p class="kicker">Revision receipt</p>
           <h2 id="workspace-title">Make a revision receipt in three steps.</h2>
@@ -87,7 +96,7 @@
               <span class="step-number" aria-hidden="true">01</span>
               <div>
                 <p class="kicker">Teacher or student</p>
-                <h3 id="context-title">Name the work and goals</h3>
+                <h2 id="context-title">Name the work and goals</h2>
               </div>
             </header>
 
@@ -117,7 +126,7 @@
               <span class="step-number" aria-hidden="true">02</span>
               <div>
                 <p class="kicker">Student</p>
-                <h3 id="drafts-title">Put the drafts side by side</h3>
+                <h2 id="drafts-title">Put the drafts side by side</h2>
               </div>
             </header>
             <div class="draft-grid">
@@ -151,7 +160,7 @@
             <span class="step-number" aria-hidden="true">03</span>
             <div>
               <p class="kicker">Student, then teacher</p>
-              <h3 id="evidence-title">Connect change to intention</h3>
+              <h2 id="evidence-title">Explain why each passage changed</h2>
             </div>
           </header>
           <div id="comparison-summary" class="comparison-summary" aria-live="polite"></div>
@@ -174,7 +183,7 @@
             <header class="receipt-header">
               <div>
                 <p class="receipt-brand">Revision receipt</p>
-                <h2 id="receipt-title">Ready for review</h2>
+                <h2 id="receipt-title">Review the finished revision receipt</h2>
               </div>
               <div class="status-stamp">Evidence<br />attached</div>
             </header>
@@ -195,7 +204,7 @@
           <h2 id="how-title">Make a revision receipt in three steps.</h2>
         </div>
         <ol>
-          <li><span>01</span><div><h3>Set feedback goals</h3><p>Keep one to three teacher goals beside the drafts.</p></div></li>
+          <li><span>01</span><div><h3>Set feedback goals</h3><p>Keep one to three feedback goals beside the drafts.</p></div></li>
           <li><span>02</span><div><h3>Compare the drafts</h3><p>Choose the before-and-after passage that best fits each goal.</p></div></li>
           <li><span>03</span><div><h3>Record the student’s explanation</h3><p>Export a receipt for human review, not an automatic grade.</p></div></li>
         </ol>
@@ -203,7 +212,7 @@
     </main>
 
     <footer class="site-footer">
-      <div><strong>Revision Receipts</strong><p>Local evidence for teacher-led revision review.</p></div>
+      <div><strong>Revision Receipts</strong><p>Compare two drafts and save a revision receipt.</p></div>
       <nav aria-label="Footer navigation"><a href="/demo">Demo</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></nav>
       <p class="asset-note">Original AI-generated hero artwork. Built by Param Factory · Build 2026.08.30.</p>
     </footer>

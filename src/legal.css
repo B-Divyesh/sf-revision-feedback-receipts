@@ -3,6 +3,7 @@
 body { margin:0; min-width:320px; font-size:17px; line-height:1.6; }
 a { color:inherit; text-decoration-thickness:2px; text-underline-offset:3px; }
 :focus-visible { outline:4px solid var(--red); outline-offset:3px; }
+.sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
 .skip-link { position:fixed; top:-80px; left:16px; z-index:5; padding:10px 14px; border:2px solid; background:var(--lime); font-weight:800; }
 .skip-link:focus { top:16px; }
 .legal-header { min-height:76px; display:flex; align-items:center; justify-content:space-between; gap:24px; padding:12px max(20px,calc((100vw - 940px)/2)); border-bottom:2px solid; background:var(--sheet); font-weight:800; }

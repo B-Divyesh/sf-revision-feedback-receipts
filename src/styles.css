@@ -62,8 +62,9 @@ h3 { font: 900 1.35rem/1.15 "Arial Black", Arial, sans-serif; letter-spacing: -0
 .button.compact { min-height: 44px; padding: 8px 14px; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 10px; }
 .hero-action-note { margin-bottom: 20px; color: var(--muted); font-size: 0.9rem; font-weight: 700; }
-.local-note { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 0.9rem; font-weight: 700; }
-.local-note span { color: var(--green); }
+.hero-facts { display: grid; gap: 6px; margin: 0; padding: 0; color: var(--muted); font-size: 0.9rem; font-weight: 700; list-style: none; }
+.hero-facts li { display: flex; align-items: center; gap: 8px; }
+.hero-facts span { color: var(--green); }
 .hero-art { position: relative; margin: 0; border: var(--line); background: var(--sheet); box-shadow: 10px 10px 0 var(--ink); transform: rotate(1deg); }
 .hero-art img { width: 100%; aspect-ratio: 3/2; object-fit: cover; }
 .hero-art figcaption { position: absolute; right: -2px; bottom: -2px; padding: 8px 12px; border: var(--line); background: var(--lime); font: 900 13px "Arial Black", Arial, sans-serif; text-transform: uppercase; }
@@ -77,6 +78,9 @@ h3 { font: 900 1.35rem/1.15 "Arial Black", Arial, sans-serif; letter-spacing: -0
 .demo-mode .hero, .demo-mode .trust-strip, .demo-mode .how-section { display: none; }
 .demo-mode .workspace { padding-top: 32px; }
 .demo-mode .section-intro, .demo-mode .step-list { display: none; }
+.demo-intro { max-width: 760px; margin-bottom: 32px; padding: 24px; border: var(--line); background: var(--blue); box-shadow: var(--shadow); }
+.demo-intro h1 { margin-bottom: 12px; font-size: clamp(2.25rem, 5vw, 4rem); }
+.demo-intro p:last-child { margin-bottom: 0; }
 .section-intro { max-width: 720px; }
 .section-intro > p:last-child { color: var(--muted); }
 .step-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 40px 0 48px; padding: 0; list-style: none; }
@@ -85,7 +89,7 @@ h3 { font: 900 1.35rem/1.15 "Arial Black", Arial, sans-serif; letter-spacing: -0
 .work-step { scroll-margin-top: 24px; padding: 40px; border: var(--line); background: var(--sheet); box-shadow: var(--shadow); }
 .work-step + .work-step, form + .work-step { margin-top: 48px; }
 .step-heading { display: flex; align-items: flex-start; gap: 20px; margin-bottom: 32px; padding-bottom: 24px; border-bottom: var(--line); }
-.step-heading h3 { margin: 0; font-size: clamp(1.6rem, 3vw, 2.25rem); }
+.step-heading h2 { margin: 0; font-size: clamp(1.6rem, 3vw, 2.25rem); }
 .step-number { flex: 0 0 auto; width: 58px; height: 58px; display: grid; place-items: center; border: var(--line); background: var(--red); color: #fff; font: 900 1.3rem "Arial Black", Arial, sans-serif; box-shadow: 4px 4px 0 var(--ink); }
 .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
 .field, .goals-fieldset { min-width: 0; }
@@ -125,8 +129,8 @@ input:hover, textarea:hover, select:hover { border-color: var(--red); }
 .change-list { display: grid; gap: 20px; counter-reset: changes; }
 .change-card { border: var(--line); counter-increment: changes; }
 .change-card > header { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 14px; border-bottom: var(--line); background: var(--ink); color: var(--sheet); }
-.change-card h4 { margin: 0; font-size: 1rem; }
-.change-card h4::before { content: "Passage " counter(changes) " · "; color: var(--lime); }
+.change-card h3 { margin: 0; font-size: 1rem; }
+.change-card h3::before { content: "Passage " counter(changes) " · "; color: var(--lime); }
 .change-kind { font-size: 0.75rem; font-weight: 900; text-transform: uppercase; }
 .passage-grid { display: grid; grid-template-columns: 1fr 1fr; }
 .passage { min-width: 0; padding: 16px; }
@@ -139,8 +143,8 @@ input:hover, textarea:hover, select:hover { border-color: var(--red); }
 .empty-passage { color: var(--muted); font-style: italic; text-decoration: none !important; }
 .goal-evidence-list { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; margin-top: 40px; }
 .goal-evidence { padding: 24px; border: var(--line); background: #faf4e7; box-shadow: 4px 4px 0 var(--ink); }
-.goal-evidence h4 { margin: 0 0 16px; font-size: 1.05rem; overflow-wrap: anywhere; }
-.goal-evidence h4 span { display: inline-grid; width: 30px; height: 30px; place-items: center; margin-right: 8px; background: var(--lime); border: 1px solid var(--ink); }
+.goal-evidence h3 { margin: 0 0 16px; font-size: 1.05rem; overflow-wrap: anywhere; }
+.goal-evidence h3 span { display: inline-grid; width: 30px; height: 30px; place-items: center; margin-right: 8px; background: var(--lime); border: 1px solid var(--ink); }
 .goal-evidence .field + .field { margin-top: 18px; }
 .goal-evidence textarea { min-height: 110px; }
 
@@ -187,9 +191,10 @@ input:hover, textarea:hover, select:hover { border-color: var(--red); }
   .site-header { gap: 12px; }
   .site-header nav { display: none; }
   .privacy-chip { font-size: 0.78rem; }
-  .hero { grid-template-columns: 1fr; gap: 40px; padding-top: 48px; }
-  .hero-art { grid-row: 1; }
-  .hero-copy { grid-row: 2; }
+  .hero { grid-template-columns: 1fr; gap: 40px; padding-top: 32px; }
+  .hero-copy { grid-row: 1; }
+  .hero-art { grid-row: 2; }
+  .hero-art img { height: auto; aspect-ratio: auto; }
   .trust-strip { grid-template-columns: 1fr; }
   .trust-strip p + p { border-left: 0; border-top: 2px solid var(--paper); }
   .step-list { grid-template-columns: 1fr; }
@@ -214,9 +219,14 @@ input:hover, textarea:hover, select:hover { border-color: var(--red); }
   .site-header { padding-inline: 12px; }
   .brand img { width: 38px; height: 38px; }
   .privacy-chip { max-width: 95px; text-align: center; }
-  .hero { padding-inline: 14px; }
+  .hero { gap: 32px; padding: 24px 14px 56px; }
   .hero-art { box-shadow: 6px 6px 0 var(--ink); }
-  h1 { font-size: 2.85rem; }
+  h1 { margin-bottom: 16px; font-size: 2.5rem; }
+  .hero-lede { margin-bottom: 18px; font-size: 1.05rem; }
+  .hero-actions { gap: 10px; }
+  .hero-actions .button { min-height: 44px; padding: 8px 12px; }
+  .hero-action-note { margin-bottom: 12px; }
+  .demo-intro { padding: 20px 16px; }
   .workspace { padding-inline: 12px; }
   .step-heading { gap: 14px; }
   .step-number { width: 48px; height: 48px; }

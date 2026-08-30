@@ -1,6 +1,6 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
-import { readFile } from 'node:fs/promises';
+import { pathToFileURL } from 'node:url';
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/');
@@ -25,7 +25,7 @@ test('creates a complete student revision receipt', async ({ page }, testInfo) =
   });
   await page.getByRole('button', { name: 'Find changed passages' }).click();
 
-  await expect(page.getByRole('heading', { name: 'Connect change to intention' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Explain why each passage changed' })).toBeVisible();
   await expect(page.locator('.change-card')).toHaveCount(2);
   await page.getByLabel('Strongest changed passage').nth(0).selectOption('change-1');
   await page.getByLabel('Strongest changed passage').nth(1).selectOption('change-2');
@@ -33,7 +33,7 @@ test('creates a complete student revision receipt', async ({ page }, testInfo) =
   await page.getByLabel('What did you change, and why?').nth(1).fill('I added a final sentence that explains why the evidence matters to the town.');
   await page.getByRole('button', { name: 'Finish the receipt' }).click();
 
-  await expect(page.getByRole('heading', { name: 'Ready for review' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Review the finished revision receipt' })).toBeVisible();
   await expect(page.locator('.receipt-goal')).toHaveCount(2);
   await expect(page.locator('.receipt-goal').first()).toContainText('survey evidence');
   await expect(page.getByRole('button', { name: 'Download receipt' })).toBeVisible();
@@ -57,7 +57,7 @@ test('explains validation errors and keeps work locally', async ({ page }) => {
   await expect(page.getByLabel('Student name')).toHaveValue('A. Student');
 });
 
-test('keeps maximum-length unbroken content usable at 390px and in the export', async ({ page, context }, testInfo) => {
+test('keeps maximum-length unbroken content usable at 390px and in the export', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'mobile', 'This regression exercises the 390px mobile boundary.');
 
   await expect(page.evaluate(() => window.innerWidth)).resolves.toBe(390);
@@ -77,7 +77,7 @@ test('keeps maximum-length unbroken content usable at 390px and in the export', 
   await expect(page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).resolves.toBe(true);
   await page.getByRole('button', { name: 'Finish the receipt' }).click();
 
-  await expect(page.getByRole('heading', { name: 'Ready for review' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Review the finished revision receipt' })).toBeVisible();
   await expect(page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).resolves.toBe(true);
 
   const downloadPromise = page.waitForEvent('download');
@@ -85,10 +85,13 @@ test('keeps maximum-length unbroken content usable at 390px and in the export', 
   const download = await downloadPromise;
   const downloadPath = await download.path();
   expect(downloadPath).not.toBeNull();
-  const receiptPage = await context.newPage();
-  await receiptPage.setContent(await readFile(downloadPath!, 'utf8'));
-  await expect(receiptPage.evaluate(() => window.innerWidth)).resolves.toBe(390);
-  await expect(receiptPage.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).resolves.toBe(true);
+  const devtools = await page.context().newCDPSession(page);
+  await devtools.send('Emulation.setDeviceMetricsOverride', {
+    width: 390, height: 844, deviceScaleFactor: 1, mobile: false,
+  });
+  await page.goto(pathToFileURL(downloadPath!).href);
+  await expect(page.evaluate(() => window.innerWidth)).resolves.toBe(390);
+  await expect(page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).resolves.toBe(true);
 });
 
 test('legal pages have required landmarks and no serious accessibility issues', async ({ page }, testInfo) => {
