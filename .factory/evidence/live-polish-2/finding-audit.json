@@ -1,0 +1,242 @@
+{
+  "checkedAt": "2026-08-30T04:15:32.020Z",
+  "routes": [
+    {
+      "path": "/",
+      "status": 200,
+      "title": "Revision Receipts — Compare draft changes",
+      "h1": [
+        "Create receipts from draft changes."
+      ],
+      "labels": [
+        "Try the demo",
+        "Make a receipt",
+        "Privacy"
+      ],
+      "targets": [
+        {
+          "label": "Revision Receipts home",
+          "width": 124.1875,
+          "height": 44
+        },
+        {
+          "label": "Try the demo",
+          "width": 116.65625,
+          "height": 64
+        },
+        {
+          "label": "Make a receipt",
+          "width": 116.671875,
+          "height": 64
+        },
+        {
+          "label": "Privacy",
+          "width": 116.65625,
+          "height": 64
+        }
+      ],
+      "scrollWidth": 390,
+      "viewportWidth": 390,
+      "axeViolations": [],
+      "consoleErrors": [],
+      "unexpectedConsoleErrors": []
+    },
+    {
+      "path": "/demo",
+      "status": 200,
+      "title": "Demo — Revision Receipts",
+      "h1": [
+        "Try a completed revision receipt"
+      ],
+      "labels": [
+        "Try the demo",
+        "Make a receipt",
+        "Privacy"
+      ],
+      "targets": [
+        {
+          "label": "Revision Receipts home",
+          "width": 124.1875,
+          "height": 44
+        },
+        {
+          "label": "Try the demo",
+          "width": 116.65625,
+          "height": 64
+        },
+        {
+          "label": "Make a receipt",
+          "width": 116.671875,
+          "height": 64
+        },
+        {
+          "label": "Privacy",
+          "width": 116.65625,
+          "height": 64
+        }
+      ],
+      "scrollWidth": 390,
+      "viewportWidth": 390,
+      "axeViolations": [],
+      "consoleErrors": [],
+      "unexpectedConsoleErrors": []
+    },
+    {
+      "path": "/privacy/",
+      "status": 200,
+      "title": "Privacy — Revision Receipts",
+      "h1": [
+        "How Revision Receipts handles your data"
+      ],
+      "labels": [
+        "Try the demo",
+        "Make a receipt",
+        "Privacy"
+      ],
+      "targets": [
+        {
+          "label": "Revision Receipts home",
+          "width": 130.1875,
+          "height": 44
+        },
+        {
+          "label": "Try the demo",
+          "width": 116.65625,
+          "height": 70.375
+        },
+        {
+          "label": "Make a receipt",
+          "width": 116.671875,
+          "height": 70.375
+        },
+        {
+          "label": "Privacy",
+          "width": 116.65625,
+          "height": 70.375
+        }
+      ],
+      "scrollWidth": 390,
+      "viewportWidth": 390,
+      "axeViolations": [],
+      "consoleErrors": [],
+      "unexpectedConsoleErrors": []
+    },
+    {
+      "path": "/terms/",
+      "status": 200,
+      "title": "Terms — Revision Receipts",
+      "h1": [
+        "Terms for using Revision Receipts"
+      ],
+      "labels": [
+        "Try the demo",
+        "Make a receipt",
+        "Privacy"
+      ],
+      "targets": [
+        {
+          "label": "Revision Receipts home",
+          "width": 130.1875,
+          "height": 44
+        },
+        {
+          "label": "Try the demo",
+          "width": 116.65625,
+          "height": 70.375
+        },
+        {
+          "label": "Make a receipt",
+          "width": 116.671875,
+          "height": 70.375
+        },
+        {
+          "label": "Privacy",
+          "width": 116.65625,
+          "height": 70.375
+        }
+      ],
+      "scrollWidth": 390,
+      "viewportWidth": 390,
+      "axeViolations": [],
+      "consoleErrors": [],
+      "unexpectedConsoleErrors": []
+    },
+    {
+      "path": "/missing-polish-2",
+      "status": 404,
+      "title": "Page not found — Revision Receipts",
+      "h1": [
+        "This page does not exist"
+      ],
+      "labels": [
+        "Try the demo",
+        "Make a receipt",
+        "Privacy"
+      ],
+      "targets": [
+        {
+          "label": "Revision Receipts home",
+          "width": 130.1875,
+          "height": 44
+        },
+        {
+          "label": "Try the demo",
+          "width": 116.65625,
+          "height": 70.375
+        },
+        {
+          "label": "Make a receipt",
+          "width": 116.671875,
+          "height": 70.375
+        },
+        {
+          "label": "Privacy",
+          "width": 116.65625,
+          "height": 70.375
+        }
+      ],
+      "scrollWidth": 390,
+      "viewportWidth": 390,
+      "axeViolations": [],
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 404 ()"
+      ],
+      "unexpectedConsoleErrors": []
+    }
+  ],
+  "firstScreen": {
+    "bottoms": {
+      "Create receipts from draft changes.": 297.75,
+      "For writing teachers who need a quick record of how students used feedback.": 364.125,
+      "Try it with sample data →": 426.125,
+      "Loads a completed sample; your real browser work stays separate.": 533.34375,
+      "● Drafts are compared in this browser.": 566.953125,
+      "● No account needed.": 594.5625,
+      "● No automatic score.": 622.171875
+    },
+    "regionNames": [
+      "Create receipts from draft changes.",
+      "Create your revision receipt.",
+      "Make a revision receipt in three steps."
+    ]
+  },
+  "focus": {
+    "privacyFocused": true,
+    "backFocused": true
+  },
+  "demo": {
+    "banner": true,
+    "initialStudent": "Jordan K.",
+    "resetStudent": "Jordan K.",
+    "realStudent": "Real student",
+    "demoStorageAfterExit": null,
+    "requestOrigins": [
+      "https://revision-feedback-receipts.sociobot.in"
+    ]
+  },
+  "offline": {
+    "status": 200,
+    "student": "Jordan K.",
+    "offlineBanner": true
+  }
+}

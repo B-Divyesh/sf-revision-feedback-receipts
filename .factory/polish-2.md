@@ -2,13 +2,14 @@
 
 Candidate repaired: `44f17cbec5f7c2790d201a27928dc3307408c1b5`  
 Review repaired: `3631536e572093864bacb0cb452e355c365986f5`  
+Repair source commit: `8232566c3b0a83ae28e1cda3c9745e568da78b63`
 Live URL: <https://revision-feedback-receipts.sociobot.in/>
 
 Every finding from `.factory/review-1.md` and `.factory/review-2.md` is mapped below. Round 1 fixes were rechecked rather than assumed.
 
 | Finding | Change made | Evidence |
 | --- | --- | --- |
-| F-1-1 | Kept the job, audience, sample action, result note, and three facts before the artwork at 390 px. The visible mobile navigation added in round 2 still leaves all required copy inside 844 px. | `keeps the full first-screen promise visible at 390 by 844`; `.factory/evidence/polish-2-local/root-390x844.png`; live `/`. |
+| F-1-1 | Kept the job, audience, sample action, result note, and three facts before the artwork at 390 px. The visible mobile navigation added in round 2 still leaves all required copy inside 844 px. | `keeps the full first-screen promise visible at 390 by 844`; `.factory/evidence/polish-2-local/root-390x844.png`; live last fact ends at 622.17 px in `.factory/evidence/live-polish-2/finding-audit.json`. |
 | F-1-2 | Kept README and demo documentation precise: Start for real opens saved work, or a blank receipt when none exists. | `keeps reviewed copy and documentation precise`; `@claim:demo-sandbox`; README and `.factory/demo.md`. |
 | F-1-3 | Kept one visible demo H1 and an ordered visible heading outline. | `repairs the verifier landing, demo, metadata, and 404 findings`; `.factory/evidence/polish-2-local/demo-390x844.png`; live `/demo`. |
 | F-1-4 | Kept the exact fact “Drafts stay in this browser” in the now-shared header. | `@claim:browser-only`; local and live request audits; live `/`. |
@@ -23,9 +24,9 @@ Every finding from `.factory/review-1.md` and `.factory/review-2.md` is mapped b
 | F-1-13 | Kept the offline description in usable-result language. | `@claim:offline-reload`; dedicated offline context. |
 | F-1-14 | Kept the Node range aligned across package metadata, README, and CI. | `keeps reviewed copy and documentation precise`; `package.json#engines`; `.github/workflows/ci.yml`. |
 | F-1-15 | Kept “feedback goal” as the single term throughout the product. | `.factory/copy-audit.md`; `keeps reviewed copy and documentation precise`. |
-| F-2-1 | Renamed the editor region to “Create your revision receipt” while retaining “Make a revision receipt in three steps” for the overview. Axe assertions now fail on every violation, regardless of impact. | `repairs the verifier landing, demo, metadata, and 404 findings`; full-suite axe result: zero violations on `/`, `/demo`, `/privacy/`, `/terms/`, and `/404.html`; Lighthouse accessibility 100. |
-| F-2-2 | Gave product, demo, policy, terms, and 404 routes the same visible mobile navigation: Try the demo, Make a receipt, Privacy. The bordered three-column strip preserves the classroom-ledger identity. | `keeps one usable mobile header on every route`; `.factory/evidence/polish-2-local/route-audit.json`; screenshots for all five routes under `.factory/evidence/polish-2-local/`; live route checks. |
-| F-2-3 | Added a 44 px minimum in both axes and equal-width mobile columns for every header link. | `keeps one usable mobile header on every route`; measured links are 116.66×64 px on product routes and 116.66×70.38 px on policy/404 routes in `.factory/evidence/polish-2-local/route-audit.json`. |
+| F-2-1 | Renamed the editor region to “Create your revision receipt” while retaining “Make a revision receipt in three steps” for the overview. Axe assertions now fail on every violation, regardless of impact. | `repairs the verifier landing, demo, metadata, and 404 findings`; full-suite and live axe result: zero violations on `/`, `/demo`, `/privacy/`, `/terms/`, and the 404; `.factory/evidence/live-polish-2/finding-audit.json`; Lighthouse accessibility 100. |
+| F-2-2 | Gave product, demo, policy, terms, and 404 routes the same visible mobile navigation: Try the demo, Make a receipt, Privacy. The bordered three-column strip preserves the classroom-ledger identity. | `keeps one usable mobile header on every route`; `.factory/evidence/polish-2-local/route-audit.json`; local and cold-live screenshots for all five routes; `.factory/evidence/live-polish-2/finding-audit.json`. |
+| F-2-3 | Added a 44 px minimum in both axes and equal-width mobile columns for every header link. | `keeps one usable mobile header on every route`; live links measure 116.66×64 px on product routes and 116.66×70.38 px on policy/404 routes in `.factory/evidence/live-polish-2/finding-audit.json`. |
 
 ## Cumulative acceptance evidence
 
@@ -37,5 +38,8 @@ Every finding from `.factory/review-1.md` and `.factory/review-2.md` is mapped b
 - Standard URL verifier: root and demo have route-specific titles, `lang=en`, one H1, one main landmark, complete alt text, named buttons, and zero console errors. Reports: `.factory/evidence/polish-2-local/verify-root/verify.json` and `verify-demo/verify.json`.
 - Build budgets: initial app JavaScript is 19.45 kB raw / 6.88 kB gzip; app CSS is 17.26 kB raw / 4.39 kB gzip.
 - Catalog copy is verb-first and 89 characters: “Compare student drafts, connect changes to feedback goals, and export a revision receipt.”
+- Clean-clone verification ran from `/tmp/revision-receipts-polish2.RGcdN7` at repair commit `8232566c3b0a83ae28e1cda3c9745e568da78b63`.
+- Azure Static Web Apps deployment `3144aee5-ff4b-46cd-aa50-e6f658639ff3` succeeded. The custom domain returned HTTPS 200 before the cold-live audit.
+- Cold-live audit: all five routes have the expected title, one H1, zero axe violations, zero unexpected console errors, shared header labels, and no 390 px overflow. Demo reset/exit preserved real work, all requests were same-origin, focus/history passed, the unknown URL returned HTTP 404, and `/demo` reloaded offline. Evidence: `.factory/evidence/live-polish-2/finding-audit.json`.
 
 All 18 cumulative findings are resolved. No severity is deferred.
