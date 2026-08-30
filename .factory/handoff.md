@@ -1,4 +1,14 @@
-# Revision Receipts — polish round 3 handoff
+# Revision Receipts — verification 5 handoff
+
+## Independent verification status
+
+**PASS — candidate `418f03ccf107651e4b1219d184c3f805e2a534e4` is accepted for release.**
+
+Independent verification was completed against <https://revision-feedback-receipts.sociobot.in/> on 2026-08-30 UTC without changing product code. The deployed root, application assets, demo, policy pages, 404, service worker, manifest, robots, and sitemap byte-match the rebuilt candidate. All 15 declared claim commands, `npm test`, lint, typecheck, production build, and the 50-test e2e suite passed. Live product, privacy, PWA, mobile, keyboard, reduced-motion, header, link, console, and axe checks passed. See [`.factory/verification-5.md`](verification-5.md) for exact evidence.
+
+**Known gaps / next steps:** None.
+
+---
 
 ## Status
 
