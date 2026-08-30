@@ -2,13 +2,13 @@
 
 ## Status
 
-**PASS — repair prepared for deployment.**
+**PASS — repaired, verified, and deployed.**
 
 - Work order: `revision-feedback-receipts-repair-4`
 - Verification report commit repaired: `cf78e7bb72fc7a001af0246612284dac41ccead9`
 - Candidate reviewed: `fc04028226e74de07aade8903f1742aa1baf8f0d`
 - Artifact/deployment class: unchanged `static-web` / Azure Static Web Apps (`dist/` site root)
-- Repair commit: recorded after the final verification below.
+- Repair commits: `1b005108acb7c20834259857c51bc64309e0cde6` and `a06e88b6d1d26cc832a87a8bd093ca4b08cea7c8`.
 
 ## Findings reproduced and repaired
 
@@ -28,7 +28,7 @@ The landing H1 is now the plain-words **Create receipts from draft changes.** Th
 
 ### Every remaining verification gap
 
-- Added a designed `404.html`, Azure 404 response override, and an end-to-end regression for its title, H1, return link, and configuration.
+- Added a designed `404.html`, Azure 404 response override, and an end-to-end regression for its title, H1, return link, and configuration. The final live check found that Azure's SPA `navigationFallback` still made unknown paths return 200. Removing that unnecessary fallback produces the intended HTTP 404 while preserving all explicit static routes; the regression now also asserts that the fallback cannot be reintroduced.
 - Added canonical, Open Graph, Twitter-card, Apple touch icon, and route-specific titles for home, demo, privacy, terms, and 404. Added the social preview derivative with design provenance.
 - Added a consistent footer on every route with the product one-liner, Demo/Privacy/Terms, Param Factory attribution, and build ID.
 - Added real ESLint plus explicit `typecheck` and `test:claims` scripts.
@@ -90,4 +90,10 @@ The diff is deterministic sentence/line comparison, not semantic analysis. Textu
 
 ## Deployment and post-deploy check
 
-Deploy `dist/` through the static-work-app work-order configuration, then run `/opt/fleet/lib/verify-url.sh https://revision-feedback-receipts.sociobot.in/ <evidence-dir>` and compare the published route hashes above with local `dist/`. Record the deployment ID and live comparison result here after deployment.
+Deployed the final `dist/` with the static-work-app work-order configuration on 2026-08-30 UTC.
+
+- Final deployment ID: `741046c6-c1b4-4823-aafc-ee84dd08c586`.
+- Live root: `https://revision-feedback-receipts.sociobot.in/` returned 200 in 790 ms with no console errors, a title, `lang=en`, one H1, a main landmark, no missing image alts, and no unlabeled buttons.
+- Live routes: `/demo`, `/privacy`, and `/terms` each returned 200. `/not-a-real-page` returned **404** with title `Page not found — Revision Receipts`.
+- Live response policy confirmed HSTS, `strict-origin-when-cross-origin`, `nosniff`, self-only CSP with `frame-ancestors 'none'`, and the restrictive camera/microphone/geolocation permissions policy.
+- Byte identity: all 18 selected local build files (pages, manifest, PWA worker, icons, images, CSS, and JavaScript) matched the custom-domain responses by SHA-256.
