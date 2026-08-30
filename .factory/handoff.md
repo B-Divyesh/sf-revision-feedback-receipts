@@ -1,5 +1,9 @@
 # Revision Receipts — repair handoff
 
+## Independent verification 4
+
+**PASS — accepted at `e4ecde30fd730af6509af145cc47bb93b871a73e`.** On 2026-08-30 UTC, an independent clean-clone verifier ran every one of the ten declared `.factory/claims.json` commands first, then unit, lint, type, production-build, full Playwright, audit, live desktop/390 px, privacy/request, header/cache, offline-update, accessibility, link, and artifact-identity checks. All passed. The deployed URL is https://revision-feedback-receipts.sociobot.in/ and its 18 fetchable generated artifacts SHA-256 match the rebuilt candidate. There are **no known defects by severity**. Full exact evidence is in `.factory/verification-4.md`.
+
 ## Status
 
 **PASS — repaired, verified, and deployed.**
