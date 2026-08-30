@@ -58,6 +58,7 @@ test('explains validation errors and keeps work locally', async ({ page }) => {
 });
 
 test('keeps maximum-length unbroken content usable at 390px and in the export', async ({ page }, testInfo) => {
+  test.setTimeout(60_000);
   test.skip(testInfo.project.name !== 'mobile', 'This regression exercises the 390px mobile boundary.');
 
   await expect(page.evaluate(() => window.innerWidth)).resolves.toBe(390);

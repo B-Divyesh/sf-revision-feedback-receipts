@@ -35,7 +35,7 @@ npm test                                          PASS — 6/6
 npm run lint                                      PASS
 npm run typecheck                                 PASS
 npm run build                                     PASS — dist/ produced
-npm run test:e2e -- --reporter=list               PASS — 35 passed, 5 intentional project skips
+npm run test:e2e -- --reporter=list               PASS — 37 passed, 5 intentional project skips
 git diff --check                                  PASS
 ```
 
