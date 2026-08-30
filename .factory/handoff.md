@@ -1,4 +1,32 @@
-# Revision Receipts — repair handoff
+# Revision Receipts — adversarial review 1 handoff
+
+## Review result
+
+**FAIL.** The review is recorded in `.factory/review-1.md`. No product code was modified.
+
+The blocking defect is the 390×844 cold landing screen: a vertically oversized, image-first hero pushes the H1 to 1,056 px and the sample action to 1,291 px. A phone visitor therefore cannot determine the job, audience, or first action before scrolling. The demo itself is realistic and isolated once entered; all ten declared claim commands pass. The report also records a false Start-for-real documentation statement, a missing visible demo H1, unlisted/broad claims, route-focus behavior, and five copy/terminology issues.
+
+## Verification performed
+
+```text
+npm ci
+npm run test:claims
+npm test
+npm run lint
+npm run typecheck
+npm run build
+npm run test:e2e -- --reporter=list
+```
+
+Results: all ten declared claims passed; 6 unit tests passed; lint, typecheck, and build passed; full browser suite passed 27 tests with 3 intentional project skips. Live 390 px and desktop cold loads, demo storage isolation/reset/exit, same-origin request capture, offline claim behavior, route metadata, unknown-route 404, internal-link crawl, back/deep links, console capture, and axe scans were checked. See `.factory/review-1.md` for exact evidence and all 15 findings.
+
+## Scope and next step
+
+Only `.factory/review-1.md` and this handoff were changed. The next worker should fix every finding, add the specified mobile/H1/focus/claim regressions, redeploy, and rerun the full review from scratch.
+
+---
+
+# Earlier repair handoff (preserved for history)
 
 ## Independent verification 4
 
