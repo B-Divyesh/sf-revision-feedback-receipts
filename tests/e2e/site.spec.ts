@@ -23,7 +23,9 @@ test('repairs the verifier landing, demo, metadata, and 404 findings', async ({ 
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://revision-feedback-receipts.sociobot.in/demo');
   await expect(page.getByText('Demo — sample data, nothing is saved', { exact: false })).toBeVisible();
   await expect(page.locator('.hero')).toHaveCount(0);
-  await expect(page.getByRole('heading', { level: 1, name: 'Try a completed revision receipt' })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1, name: 'Review a sample revision receipt' })).toBeVisible();
+  await expect(page.locator('#demo-evidence-preview')).toBeVisible();
+  await expect(page.locator('#receipt-output')).toBeVisible();
   await expect(page.locator('h1:visible')).toHaveCount(1);
   const visibleHeadingLevels = await page.locator('h1:visible, h2:visible, h3:visible, h4:visible').evaluateAll((headings) => headings.map((heading) => Number(heading.tagName.slice(1))));
   visibleHeadingLevels.reduce((previous, current) => {
@@ -89,7 +91,7 @@ test('keeps the full first-screen promise visible at 390 by 844', async ({ page 
   await page.goto('/');
   const required = [
     page.getByRole('heading', { level: 1, name: 'Create receipts from draft changes.' }),
-    page.getByText('For writing teachers who need a quick record of how students used feedback.'),
+    page.getByText('For writing teachers who need a record of how students used feedback.'),
     page.getByRole('link', { name: 'Try it with sample data' }),
     page.getByText('Loads a completed sample; your real browser work stays separate.'),
     page.getByText('Drafts are compared in this browser.'),
@@ -102,6 +104,27 @@ test('keeps the full first-screen promise visible at 390 by 844', async ({ page 
     expect(box, label).not.toBeNull();
     expect(box!.y + box!.height, label).toBeLessThanOrEqual(844);
   }
+  await expect(page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).resolves.toBe(true);
+});
+
+test('opens the completed demo on evidence and a reflection at 390 by 844', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'mobile', 'This is the required 390×844 demo-first-screen regression.');
+  await page.goto('/?demo=1');
+  await expect(page.getByRole('heading', { level: 1, name: 'Review a sample revision receipt' })).toBeVisible();
+  const previewItems = [
+    page.getByTestId('demo-preview-before'),
+    page.getByTestId('demo-preview-after'),
+    page.getByTestId('demo-preview-reflection'),
+  ];
+  for (const locator of previewItems) {
+    const label = await locator.textContent();
+    const box = await locator.boundingBox();
+    expect(box, label ?? 'demo result').not.toBeNull();
+    expect(box!.y + box!.height, label ?? 'demo result').toBeLessThanOrEqual(844);
+  }
+  const downloadPromise = page.waitForEvent('download');
+  await page.getByRole('button', { name: 'Download sample receipt' }).click();
+  await expect(downloadPromise).resolves.toBeTruthy();
   await expect(page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).resolves.toBe(true);
 });
 
@@ -122,6 +145,8 @@ test('keeps reviewed copy and documentation precise', async ({ page }) => {
   await expect(page.getByText('Private by default', { exact: true })).toHaveCount(0);
   await expect(page.getByText('Keep one to three feedback goals beside the drafts.', { exact: true })).toBeVisible();
   await expect(page.getByText('Compare two drafts and save a revision receipt.', { exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'What a revision receipt does not prove' })).toBeVisible();
+  await expect(page.getByText('For writing teachers who need a quick record of how students used feedback.')).toHaveCount(0);
 
   const readme = await readFile('README.md', 'utf8');
   const demo = await readFile('.factory/demo.md', 'utf8');

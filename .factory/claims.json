@@ -29,10 +29,24 @@
   },
   {
     "id": "browser-only",
-    "claim": "Draft text stays in browser storage and the demo makes same-origin requests only.",
+    "claim": "Drafts stay in this browser.",
     "where": "Landing privacy note and privacy policy",
     "test": "npm run test:e2e -- --grep @claim:browser-only",
-    "sandbox": "Fresh /demo page; record every request through a completed receipt and assert same-origin requests only plus demo-only storage."
+    "sandbox": "Fresh /demo page; assert the supplied drafts occupy only the demo browser-storage namespace, never the real workspace."
+  },
+  {
+    "id": "no-classroom-content-transmission",
+    "claim": "No classroom content is transmitted to us.",
+    "where": "Privacy policy, landing workspace, README, and terms",
+    "test": "npm run test:e2e -- --grep @claim:no-classroom-content-transmission",
+    "sandbox": "Fresh /demo page; record every request, header, URL, body, beacon, and WebSocket while opening and exporting the completed sample. Assert no fetch/XHR/ping/WebSocket, no request body, and no sample classroom string leaves the page."
+  },
+  {
+    "id": "no-analytics-tracking",
+    "claim": "We do not add analytics or tracking.",
+    "where": "Privacy policy and README",
+    "test": "npm run test:e2e -- --grep @claim:no-analytics-tracking",
+    "sandbox": "Fresh /demo page; complete and export the sample while asserting no analytics or telemetry request, beacon, WebSocket, tracking cookie, tracking storage key, third-party script, or tracking resource is created."
   },
   {
     "id": "local-autosave",

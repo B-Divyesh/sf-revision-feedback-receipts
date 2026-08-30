@@ -6,7 +6,7 @@ Use `https://revision-feedback-receipts.sociobot.in/?demo=1` or choose **Try it 
 
 ## Sample workspace
 
-The demo opens a completed evidence workspace for Jordan K.’s *Community park argument*. It contains two teacher feedback goals, a first draft, revised passages, selected evidence, and student reflections. Visitors can finish, export, edit, reset, and take the sample offline after the first visit.
+The demo opens a completed revision receipt for Jordan K.’s *Community park argument*. Its first view shows a feedback goal, a before-and-after passage, and Jordan’s reflection. The full sample contains two feedback goals, drafts, selected evidence, and reflections. Visitors can export, edit, reset, and take the sample offline after the first visit.
 
 ## Isolation and controls
 

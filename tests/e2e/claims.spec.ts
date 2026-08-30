@@ -12,7 +12,7 @@ async function openCleanDemo(page: Page): Promise<void> {
   }, [REAL_STORAGE_KEY, DEMO_STORAGE_KEY]);
   await page.reload();
   await expect(page).toHaveTitle('Demo — Revision Receipts');
-  await expect(page.getByRole('heading', { level: 1, name: 'Try a completed revision receipt' })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1, name: 'Review a sample revision receipt' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Explain why each passage changed' })).toBeVisible();
 }
 
@@ -32,6 +32,8 @@ test('@claim:demo-sandbox Try the sample without changing real browser work', as
   await expect(page).toHaveURL(/\?demo=1$/);
   await expect(page).toHaveTitle('Demo — Revision Receipts');
   await expect(page.getByText('Demo — sample data, nothing is saved', { exact: false })).toBeVisible();
+  await expect(page.locator('#demo-evidence-preview')).toBeVisible();
+  await expect(page.locator('#receipt-output')).toBeVisible();
   await expect(page.getByLabel('Student name')).toHaveValue('Jordan K.');
   await expect(page.getByLabel('Feedback goal 1', { exact: true })).toHaveValue('Use specific evidence to support the claim');
   await expect(page.getByRole('button', { name: 'Reset demo' })).toBeVisible();
@@ -73,6 +75,10 @@ test('@claim:free-use The sample can be completed and exported without payment',
 
 test('@claim:revision-workflow The sample compares drafts against feedback goals and records reflections', async ({ page }) => {
   await openCleanDemo(page);
+  await expect(page.locator('#demo-evidence-preview')).toContainText('Use specific evidence to support the claim');
+  await expect(page.locator('#demo-evidence-preview')).toContainText('A 2025 survey found that 68 percent of residents lack a nearby green space.');
+  await expect(page.locator('#demo-evidence-preview')).toContainText('I replaced a vague statement with survey evidence');
+  await expect(page.locator('#receipt-output')).toBeVisible();
   await expect(page.locator('.change-card')).toHaveCount(2);
   await expect(page.getByLabel('Strongest changed passage *')).toHaveCount(2);
   await expect(page.getByLabel('What did you change, and why? *')).toHaveCount(2);
@@ -80,19 +86,95 @@ test('@claim:revision-workflow The sample compares drafts against feedback goals
   await expect(page.locator('.receipt-goal')).toHaveCount(2);
 });
 
-test('@claim:browser-only Demo draft text stays on this site', async ({ page }) => {
-  const requests: string[] = [];
-  page.on('request', (request) => requests.push(request.url()));
+test('@claim:browser-only Demo drafts stay in the demo browser storage namespace', async ({ page }) => {
   await openCleanDemo(page);
-  await finishSampleReceipt(page);
-
-  expect(requests.length).toBeGreaterThan(0);
-  expect(requests.every((url) => new URL(url).origin === 'http://127.0.0.1:4173')).toBe(true);
   const realAndDemoStorage = page.evaluate(({ realKey, demoKey }) => ({ real: localStorage.getItem(realKey), demo: localStorage.getItem(demoKey) }), {
     realKey: REAL_STORAGE_KEY,
     demoKey: DEMO_STORAGE_KEY,
   });
   await expect(realAndDemoStorage).resolves.toMatchObject({ real: null, demo: expect.stringContaining('Jordan K.') });
+});
+
+type RequestRecord = {
+  url: string;
+  method: string;
+  resourceType: string;
+  headers: Record<string, string>;
+  body: string;
+};
+
+function recordNetwork(page: Page): { requests: RequestRecord[]; webSockets: string[] } {
+  const requests: RequestRecord[] = [];
+  const webSockets: string[] = [];
+  page.on('request', (request) => {
+    requests.push({
+      url: request.url(),
+      method: request.method(),
+      resourceType: request.resourceType(),
+      headers: request.headers(),
+      body: request.postData() ?? '',
+    });
+  });
+  page.on('websocket', (socket) => webSockets.push(socket.url()));
+  return { requests, webSockets };
+}
+
+async function openAndExportSample(page: Page): Promise<void> {
+  await openCleanDemo(page);
+  const downloadPromise = page.waitForEvent('download');
+  await page.getByRole('button', { name: 'Download sample receipt' }).click();
+  await downloadPromise;
+  await page.waitForTimeout(150);
+}
+
+test('@claim:no-classroom-content-transmission The completed sample sends no classroom content', async ({ page }) => {
+  const audit = recordNetwork(page);
+  await openAndExportSample(page);
+
+  expect(audit.requests.length).toBeGreaterThan(0);
+  expect(audit.webSockets).toEqual([]);
+  const classroomStrings = [
+    'Jordan K.',
+    'Community park argument',
+    'Use specific evidence to support the claim',
+    'Parks are good.',
+    'A 2025 survey found that 68 percent of residents lack a nearby green space.',
+    'I replaced a vague statement with survey evidence so the claim uses a specific fact.',
+  ];
+  for (const request of audit.requests) {
+    expect(new URL(request.url).origin).toBe('http://127.0.0.1:4173');
+    expect(request.resourceType).not.toMatch(/^(fetch|xhr|ping|websocket)$/);
+    expect(request.method).toBe('GET');
+    expect(request.body).toBe('');
+    const requestText = `${request.url}\n${JSON.stringify(request.headers)}\n${request.body}`;
+    for (const classroomString of classroomStrings) expect(requestText).not.toContain(classroomString);
+  }
+});
+
+test('@claim:no-analytics-tracking The completed sample adds no analytics or tracking', async ({ page, context }) => {
+  const audit = recordNetwork(page);
+  await openAndExportSample(page);
+  const pageState = await page.evaluate(() => ({
+    cookie: document.cookie,
+    localStorageKeys: Object.keys(localStorage),
+    sessionStorageKeys: Object.keys(sessionStorage),
+    scriptSources: [...document.scripts].map((script) => script.src).filter(Boolean),
+    resourceUrls: performance.getEntriesByType('resource').map((entry) => entry.name),
+  }));
+  const trackingPattern = /analytics|tracking|telemetry|metric|segment|amplitude|mixpanel|sentry|hotjar|clarity|pixel/i;
+
+  expect(audit.webSockets).toEqual([]);
+  for (const request of audit.requests) {
+    expect(new URL(request.url).origin).toBe('http://127.0.0.1:4173');
+    expect(request.resourceType).not.toMatch(/^(fetch|xhr|ping|websocket)$/);
+    expect(request.url).not.toMatch(trackingPattern);
+  }
+  expect(pageState.cookie).toBe('');
+  expect(pageState.localStorageKeys).toEqual([DEMO_STORAGE_KEY]);
+  expect(pageState.sessionStorageKeys).toEqual([]);
+  expect(pageState.scriptSources.every((source) => new URL(source).origin === 'http://127.0.0.1:4173')).toBe(true);
+  expect(pageState.resourceUrls.every((url) => !trackingPattern.test(url))).toBe(true);
+  expect(await context.cookies()).toEqual([]);
 });
 
 test('@claim:local-autosave Unfinished demo work is saved in browser storage', async ({ page }) => {

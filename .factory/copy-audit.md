@@ -1,39 +1,39 @@
-# Copy audit — polish round 2
+# Copy audit — polish round 3
 
-Counting method: whitespace-delimited words after removing presentation punctuation. Hyphenated terms, URLs, commands, and placeholders count as one word.
+Counting method: whitespace-delimited words after removing presentation punctuation. Hyphenated terms, URLs, commands, versions, and placeholders count as one word. Student sample text is identified separately from product copy.
 
 ## First screen
 
 | Copy | Words | Result |
 | --- | ---: | --- |
 | Create receipts from draft changes. | 5 | Pass |
-| For writing teachers who need a quick record of how students used feedback. | 13 | Pass |
-| Try it with sample data. | 5 | Pass |
-| Start a blank receipt. | 4 | Pass |
+| For writing teachers who need a record of how students used feedback. | 12 | Pass |
 | Loads a completed sample; your real browser work stays separate. | 9 | Pass |
 | Drafts are compared in this browser. | 6 | Pass |
 | No account needed. | 3 | Pass |
 | No automatic score. | 3 | Pass |
 
-At 390×844, the headline, audience, primary action, result sentence, and all three facts fit in the first viewport. The sentence and action state the audience, job, and next step in one breath.
+At 390×844, the headline, audience, primary action, result sentence, and all three facts fit in the first viewport. The word `quick` was removed because no speed promise is published or needed.
 
-## Landing, demo, workflow, and conditional sentences
+## Demo, workflow, landing limits, and conditional sentences
 
 | Copy | Words | Result |
 | --- | ---: | --- |
 | You’re offline. | 2 | Pass |
 | The tool still works; exports stay on this device. | 9 | Pass |
 | Use the sample receipt without changing your own browser work. | 10 | Pass |
-| Review Jordan’s changed passages and reflections, then finish or export the sample receipt. | 13 | Pass |
-| Export an HTML receipt. | 4 | Pass |
-| Create your revision receipt. | 4 | Pass |
-| Make a revision receipt in three steps. | 7 | Pass |
+| One changed passage and its reflection are ready to review. | 10 | Pass |
+| The tool only compares supplied drafts. | 6 | Pass |
+| It does not generate writing or assign a score. | 9 | Pass |
+| A receipt supports human review. | 5 | Pass |
+| It does not prove learning, authorship, or quality. | 8 | Pass |
+| Drafts stay in this browser. | 5 | Pass |
 | Unfinished work saves in this browser as you type. | 9 | Pass |
 | Required fields are marked with an asterisk. | 7 | Pass |
 | Use initials if your classroom policy prefers. | 7 | Pass |
 | Add up to three specific goals from the teacher’s feedback. | 10 | Pass |
 | These drafts are compared on your device. | 7 | Pass |
-| We cannot see, recover, or grade them. | 7 | Pass |
+| We cannot see, recover, or grade them. | 7 | Pass; the no-transmission, local-storage, and no-score claims cover each limit |
 | Review the detected changes, then choose the strongest passage for each goal and explain what you did. | 17 | Pass |
 | The tool finds textual change; it does not judge quality or learning. | 12 | Pass |
 | This reflection is included verbatim on the receipt. | 8 | Pass |
@@ -72,11 +72,21 @@ At 390×844, the headline, audience, primary action, result sentence, and all th
 | Clear `<student>`’s drafts, goals, and receipt from this device? | 9 | Pass |
 | This cannot be undone. | 4 | Pass |
 
-No sentence exceeds 22 words. No sentence uses the banned marketing terms: leverage, seamless, effortless, robust, powerful, intuitive, reimagine, supercharge, unlock, delightful, journey, ecosystem, or AI-powered.
+The completed demo’s visible sample uses Jordan K.’s community-park argument. Its first result shows the goal, both passages, and Jordan’s reflection. It is content supplied as a realistic sample, not marketing copy.
+
+## Privacy and documentation additions
+
+| Copy | Words | Result |
+| --- | ---: | --- |
+| No classroom content is transmitted to us. | 7 | Pass; `no-classroom-content-transmission` |
+| We do not add analytics or tracking. | 7 | Pass; `no-analytics-tracking` |
+| The app asks for no account and sends no classroom content. | 11 | Pass; `no-account` and `no-classroom-content-transmission` |
+| Hosting may process the technical request data listed above. | 9 | Pass; scoped hosting disclosure |
+| The app sends no classroom content and adds no analytics or tracking. | 11 | Pass; both privacy claims |
 
 ## Headings and terminology
 
-Headings name their task or section. The editor is **Create your revision receipt**, while the separate overview is **Make a revision receipt in three steps**. The prior abstract headings are now **Explain why each passage changed** and **Review the finished revision receipt**. The downloaded page uses **Revision receipt for `<student>`**.
+Headings name their task or result: **Review a sample revision receipt**, **Create your revision receipt**, **Explain why each passage changed**, **Review the finished revision receipt**, **Make a revision receipt in three steps**, and **What a revision receipt does not prove**. The demo H1 matches the ready-to-review receipt preview that now appears in the first viewport.
 
 | Concept | One term used |
 | --- | --- |
@@ -85,3 +95,7 @@ Headings name their task or section. The editor is **Create your revision receip
 | Before-and-after textual evidence | Changed passage |
 | Student explanation | Reflection |
 | Finished artifact | Revision receipt |
+| Isolated try-out | Demo |
+| Shipped demo data | Sample |
+
+No sentence exceeds 22 words. No sentence uses the banned marketing terms: leverage, seamless, effortless, robust, powerful, intuitive, reimagine, supercharge, unlock, delightful, journey, ecosystem, or AI-powered.

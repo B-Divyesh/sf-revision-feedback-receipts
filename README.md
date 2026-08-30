@@ -40,7 +40,7 @@ The deployment command is exactly `npm run build`; Azure Static Web Apps should 
 
 ## Privacy and classroom use
 
-Drafts, goals, student identifiers, evidence choices, and reflections are stored in the current browser. “Clear this device and start over” removes the real working copy. Downloaded or printed receipts are the user’s responsibility to handle under school policy. See [`/privacy`](https://revision-feedback-receipts.sociobot.in/privacy/) and [`/terms`](https://revision-feedback-receipts.sociobot.in/terms/).
+Drafts, goals, student identifiers, evidence choices, and reflections are stored in the current browser. The app sends no classroom content and adds no analytics or tracking. “Clear this device and start over” removes the real working copy. Downloaded or printed receipts are the user’s responsibility to handle under school policy. See [`/privacy`](https://revision-feedback-receipts.sociobot.in/privacy/) and [`/terms`](https://revision-feedback-receipts.sociobot.in/terms/).
 
 Technical note: the isolated sample uses `demo:revision-receipts-work-v1`; real work uses `revision-receipts-work-v1`.
 

@@ -40,7 +40,10 @@ function sampleState(): AppState {
       'I replaced a vague statement with survey evidence so the claim uses a specific fact.',
       'I added a sentence that explains why the survey matters to the town.',
     ],
-    phase: 'evidence',
+    // The demo is deliberately a finished receipt, not a partly completed
+    // form. A visitor can inspect and export the result before deciding
+    // whether to edit the supplied work.
+    phase: 'receipt',
   };
 }
 
@@ -108,10 +111,58 @@ function showDemoIntro(): void {
   const heading = document.createElement('h1');
   heading.id = 'demo-title';
   heading.tabIndex = -1;
-  heading.textContent = 'Try a completed revision receipt';
+  heading.textContent = 'Review a sample revision receipt';
   const instruction = document.createElement('p');
-  instruction.textContent = 'Review Jordan’s changed passages and reflections, then finish or export the sample receipt.';
-  intro.append(kicker, heading, instruction);
+  instruction.className = 'demo-intro-copy';
+  instruction.textContent = 'One changed passage and its reflection are ready to review.';
+
+  const preview = document.createElement('article');
+  preview.id = 'demo-evidence-preview';
+  preview.className = 'demo-preview';
+  preview.setAttribute('aria-labelledby', 'demo-preview-goal');
+  const goalLabel = document.createElement('p');
+  goalLabel.className = 'demo-preview-label';
+  goalLabel.textContent = 'Feedback goal';
+  const goal = document.createElement('h2');
+  goal.id = 'demo-preview-goal';
+  goal.textContent = 'Use specific evidence to support the claim';
+  const passages = document.createElement('div');
+  passages.className = 'demo-preview-passages';
+  ([
+    ['Before', 'Parks are good.', 'before'],
+    ['After', 'A 2025 survey found that 68 percent of residents lack a nearby green space.', 'after'],
+  ] as const).forEach(([labelText, text, side]) => {
+    const passage = document.createElement('div');
+    passage.className = `demo-preview-passage ${side}`;
+    passage.dataset.testid = `demo-preview-${side}`;
+    const label = document.createElement('strong');
+    label.textContent = labelText;
+    const quote = document.createElement('blockquote');
+    quote.textContent = text;
+    passage.append(label, quote);
+    passages.append(passage);
+  });
+  const reflection = document.createElement('p');
+  reflection.className = 'demo-preview-reflection';
+  reflection.dataset.testid = 'demo-preview-reflection';
+  const reflectionLabel = document.createElement('strong');
+  reflectionLabel.textContent = 'Student reflection: ';
+  reflection.append(reflectionLabel, document.createTextNode('I replaced a vague statement with survey evidence so the claim uses a specific fact.'));
+  const actions = document.createElement('div');
+  actions.className = 'demo-preview-actions no-print';
+  const edit = document.createElement('a');
+  edit.className = 'button button-secondary compact';
+  edit.href = '#step-context';
+  edit.textContent = 'Edit sample';
+  const download = document.createElement('button');
+  download.className = 'button button-primary compact';
+  download.type = 'button';
+  download.textContent = 'Download sample receipt';
+  download.addEventListener('click', downloadReceipt);
+  actions.append(edit, download);
+  preview.append(goalLabel, goal, passages, reflection, actions);
+
+  intro.append(kicker, heading, instruction, preview);
   const workspace = byId('make-receipt');
   workspace.setAttribute('aria-labelledby', heading.id);
   workspace.prepend(intro);
@@ -494,7 +545,10 @@ if (isDemo) {
     event.preventDefault();
     startForReal();
   });
-  byId('start-over').textContent = 'Reset demo';
+  // Resetting is intentionally offered once in the persistent demo banner so
+  // the action stays easy to find without duplicating an indistinguishable
+  // control at the bottom of the completed receipt.
+  byId('start-over').hidden = true;
 }
 
 (['student-name', 'assignment-name'] as const).forEach((id) => {
