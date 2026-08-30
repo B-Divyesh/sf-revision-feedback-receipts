@@ -14,6 +14,13 @@
     "sandbox": "Fresh /demo page; create the prefilled sample receipt without sign-in controls."
   },
   {
+    "id": "free-use",
+    "claim": "Use the tool and export a receipt without payment.",
+    "where": "Terms and README",
+    "test": "npm run test:e2e -- --grep @claim:free-use",
+    "sandbox": "Fresh ?demo=1 page; finish and download the sample receipt while asserting no billing or payment controls or requests appear."
+  },
+  {
     "id": "revision-workflow",
     "claim": "Compare two drafts against feedback goals and record a student reflection for review.",
     "where": "README and landing page",
@@ -61,6 +68,20 @@
     "where": "Landing eyebrow and terms",
     "test": "npm run test:e2e -- --grep @claim:no-writing-generation",
     "sandbox": "Fresh /demo page; finish the sample and assert its exact source passages and student reflections appear in the receipt."
+  },
+  {
+    "id": "no-plagiarism-detection",
+    "claim": "The tool does not detect plagiarism.",
+    "where": "README and terms",
+    "test": "npm run test:e2e -- --grep @claim:no-plagiarism-detection",
+    "sandbox": "Fresh ?demo=1 page; complete a receipt and assert the workflow offers and outputs no plagiarism check or result."
+  },
+  {
+    "id": "clear-real-work",
+    "claim": "Clear this device and start over removes the real working copy without removing demo data.",
+    "where": "README, privacy policy, and completed receipt",
+    "test": "npm run test:e2e -- --grep @claim:clear-real-work",
+    "sandbox": "Fresh browser context with seeded real and demo keys; clear a completed real receipt, accept confirmation, and assert only the real key is deleted and the form is empty."
   },
   {
     "id": "offline-reload",

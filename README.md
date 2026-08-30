@@ -8,13 +8,13 @@ Live site: <https://revision-feedback-receipts.sociobot.in>
 
 ## Start with the sample
 
-Open <https://revision-feedback-receipts.sociobot.in/demo> or choose **Try it with sample data** on the landing page. The sample uses Jordan K.’s community-park argument with two feedback goals, changed passages, and reflections. It uses the separate `demo:revision-receipts-work-v1` browser-storage key. **Reset demo** restores the sample. **Start for real** discards the sample workspace and returns to the empty tool.
+Open <https://revision-feedback-receipts.sociobot.in/?demo=1> or choose **Try it with sample data** on the landing page. The sample uses Jordan K.’s community-park argument with two feedback goals, changed passages, and reflections. The sample is stored separately from your own work. **Reset demo** restores the sample. **Start for real** deletes the demo copy and opens your existing browser workspace, or a blank receipt if you have no saved work.
 
 The tool saves unfinished work in browser storage, exports a portable HTML receipt, and works offline after the first online visit. No account is needed. The receipt shows passages and reflections, not an automatic score. It does not generate writing, grade work, detect plagiarism, or determine authorship. Textual change is not proof of learning, authorship, or quality.
 
 ## Develop
 
-Requires Node.js 20 or newer.
+Requires Node.js 20.19+ or 22.12+.
 
 ```bash
 npm install
@@ -36,11 +36,13 @@ npm run test:claims # every published claim from a clean demo entry point
 
 Playwright is pinned to `1.58.2`. If its Chromium binary is not already available, run `npx playwright install chromium` before the end-to-end suite.
 
-The deployment command is exactly `npm run build`; Azure Static Web Apps should publish `./dist`. `public/staticwebapp.config.json` supplies security, routing, the designed 404 response, and cache headers. The build creates a versioned service worker that precaches the application shell.
+The deployment command is exactly `npm run build`; Azure Static Web Apps should publish `./dist`. `public/staticwebapp.config.json` supplies security, routing, the designed 404 response, and cache headers. The build caches the site files needed for offline use.
 
 ## Privacy and classroom use
 
 Drafts, goals, student identifiers, evidence choices, and reflections are stored in the current browser. “Clear this device and start over” removes the real working copy. Downloaded or printed receipts are the user’s responsibility to handle under school policy. See [`/privacy`](https://revision-feedback-receipts.sociobot.in/privacy/) and [`/terms`](https://revision-feedback-receipts.sociobot.in/terms/).
+
+Technical note: the isolated sample uses `demo:revision-receipts-work-v1`; real work uses `revision-receipts-work-v1`.
 
 ## Project notes
 
