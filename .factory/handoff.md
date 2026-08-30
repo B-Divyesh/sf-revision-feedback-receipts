@@ -1,37 +1,53 @@
-# Revision Receipts — adversarial review 2 handoff
+# Revision Receipts — polish round 2 handoff
 
 ## Status
 
-**Review complete; product verdict FAIL with three minor findings and no blocking findings.**
+**Repair complete locally; all 18 cumulative review findings pass.**
 
-- Work order: `revision-feedback-receipts-review-2`
-- Reviewed source: `44f17cbec5f7c2790d201a27928dc3307408c1b5`
+- Work order: `revision-feedback-receipts-polish-2`
+- Candidate: `44f17cbec5f7c2790d201a27928dc3307408c1b5`
+- Review: `3631536e572093864bacb0cb452e355c365986f5`
 - Live site: <https://revision-feedback-receipts.sociobot.in/>
-- Full report: [`.factory/review-2.md`](review-2.md)
+- Finding receipt: [`.factory/polish-2.md`](polish-2.md)
 
-## What was done
+## What changed
 
-The live site was opened cold at 390×844 and 1440×900 before scrolling. The landing and README copy were audited sentence by sentence. The one-click demo, sample quality, Reset, Start for real, real/demo storage isolation, same-origin request behavior, and live offline reload were verified.
+The editor and explanatory overview now have distinct accessible names. All routes use the same visible mobile header labels and order. Every header link is at least 44 px in both axes at 390 px. Axe checks now reject violations at every impact level.
 
-Every command in `.factory/claims.json` was run from a clean clone. Routes, metadata, 404 behavior, internal links, history focus, accessibility, touch targets, and the visual identity were checked. All 15 findings from review 1 and their polish claims were rechecked live and in code; all remain fixed. Product code was not modified.
+The round 1 first-screen wording, isolated `?demo=1` sample, banner controls, claim contract, route titles and metadata, focus restoration, designed 404, legal routes, offline behavior, and local-only storage were rechecked and remain fixed. The product keeps its black-rule, recycled-paper, red-pencil, carbon-copy blue, and lime-highlighter identity.
+
+The catalog description is now: “Compare student drafts, connect changes to feedback goals, and export a revision receipt.”
 
 ## Verification
 
 ```text
-npm run test:claims                 PASS — all 13 claim entries
+npm ci                              PASS — 161 packages, 0 vulnerabilities
+npm run test:claims                 PASS — all 13 claim commands
 npm test                            PASS — 6/6
 npm run lint                        PASS
 npm run typecheck                   PASS
 npm run build                       PASS — dist/ produced
-npm run test:e2e -- --reporter=list PASS — 37 passed, 5 intentional project skips
+npm run test:e2e -- --reporter=list PASS — 38 passed, 6 intentional project skips
 ```
 
-The live root and demo also passed `/opt/fleet/lib/verify-url.sh`. Live request logging observed only same-origin GETs; the service-worker-controlled demo reloaded offline with its sample intact.
+Playwright axe reports zero violations of any severity on all tested routes. Lighthouse reports 100 performance, 100 accessibility, 100 best practices, and 100 SEO, with 1.4 s LCP, 0 ms TBT, and zero CLS. The app ships 6.88 kB gzip JavaScript and 4.39 kB gzip CSS. Local screenshots and measurements are in `.factory/evidence/polish-2-local/`; Lighthouse output is `.factory/evidence/lighthouse-polish-2.json`.
 
-## Findings left
+## Run and verify
 
-1. `F-2-1`: the editor and How it works regions share the accessible name `Make a revision receipt in three steps.`
-2. `F-2-2`: the mobile product header hides navigation while legal and 404 headers show a differently labelled, wrapping navigation.
-3. `F-2-3`: the legal/404 `Tool` navigation target is 35×44 px instead of at least 44×44 px.
+Use Node.js 20.19+ or 22.12+.
 
-No demo, claim, privacy, routing, build, or earlier-finding blocker remains. See the report for exact locations and fixes.
+```bash
+npm ci
+npm test
+npm run lint
+npm run typecheck
+npm run build
+npm run test:claims
+npm run test:e2e -- --reporter=list
+```
+
+The static deployment artifact is `dist/`. The production demo entry point is <https://revision-feedback-receipts.sociobot.in/?demo=1>.
+
+## Known gaps and next steps
+
+None. No review finding, failed gate, or deferred minor item remains.

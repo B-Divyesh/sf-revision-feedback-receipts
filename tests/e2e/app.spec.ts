@@ -44,7 +44,7 @@ test('creates a complete student revision receipt', async ({ page }, testInfo) =
 
   if (testInfo.project.name === 'chromium') {
     const results = await new AxeBuilder({ page }).exclude('.hero-art').analyze();
-    expect(results.violations.filter((violation) => ['critical', 'serious'].includes(violation.impact ?? ''))).toEqual([]);
+    expect(results.violations).toEqual([]);
   }
 });
 
@@ -95,7 +95,7 @@ test('keeps maximum-length unbroken content usable at 390px and in the export', 
   await expect(page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).resolves.toBe(true);
 });
 
-test('legal pages have required landmarks and no serious accessibility issues', async ({ page }, testInfo) => {
+test('legal pages have required landmarks and no accessibility violations', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name === 'mobile', 'Covered once; responsive legal layout is static CSS.');
   for (const path of ['/privacy/', '/terms/']) {
     await page.goto(path);
@@ -103,6 +103,6 @@ test('legal pages have required landmarks and no serious accessibility issues', 
     await expect(page.locator('main')).toHaveCount(1);
     await expect(page.getByRole('heading', { level: 1 })).toHaveCount(1);
     const results = await new AxeBuilder({ page }).analyze();
-    expect(results.violations.filter((violation) => ['critical', 'serious'].includes(violation.impact ?? ''))).toEqual([]);
+    expect(results.violations).toEqual([]);
   }
 });

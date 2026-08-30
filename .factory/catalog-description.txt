@@ -1,1 +1,1 @@
-Compare two drafts against feedback goals and save a student revision receipt in your browser.
+Compare student drafts, connect changes to feedback goals, and export a revision receipt.

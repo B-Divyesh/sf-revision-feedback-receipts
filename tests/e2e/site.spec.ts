@@ -57,11 +57,30 @@ test('repairs the verifier landing, demo, metadata, and 404 findings', async ({ 
   expect(config).not.toHaveProperty('navigationFallback');
 
   if (testInfo.project.name === 'chromium') {
-    for (const path of ['/', '/demo', '/404.html']) {
+    for (const path of ['/', '/demo', '/privacy/', '/terms/', '/404.html']) {
       await page.goto(path);
       const results = await new AxeBuilder({ page }).analyze();
-      expect(results.violations.filter((violation) => ['critical', 'serious'].includes(violation.impact ?? ''))).toEqual([]);
+      expect(results.violations, `axe violations at ${path}`).toEqual([]);
     }
+  }
+});
+
+test('keeps one usable mobile header on every route', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'mobile', 'This checks the shared 390px header treatment.');
+  const expectedLabels = ['Try the demo', 'Make a receipt', 'Privacy'];
+
+  for (const path of ['/', '/demo', '/privacy/', '/terms/', '/404.html']) {
+    await page.goto(path);
+    const header = page.locator('body > header');
+    await expect(header.getByRole('navigation', { name: 'Main navigation' }).getByRole('link')).toHaveText(expectedLabels);
+    for (const control of await header.getByRole('link').all()) {
+      const label = (await control.getAttribute('aria-label')) ?? (await control.textContent()) ?? 'header link';
+      const box = await control.boundingBox();
+      expect(box, `${label} at ${path}`).not.toBeNull();
+      expect(box!.width, `${label} width at ${path}`).toBeGreaterThanOrEqual(44);
+      expect(box!.height, `${label} height at ${path}`).toBeGreaterThanOrEqual(44);
+    }
+    await expect(page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).resolves.toBe(true);
   }
 });
 

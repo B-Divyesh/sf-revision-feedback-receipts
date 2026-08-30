@@ -26,7 +26,7 @@ The direction is deliberately single-mode: the warm paper field and literal ink/
 
 ## Spacing and structure
 
-An 8px base rhythm (`4, 8, 16, 24, 32, 48, 64`). Content maxes at 1180px. The workflow is a single vertical ledger with three numbered sections. Inputs group by proximity before borders. Independent draft sheets and receipt evidence use 2px ink borders with a 6px hard shadow, like paper stacked on a desk. Touch targets are at least 44px. At 390px, the hero illustration becomes a compact masthead, draft columns stack, and actions span the available width.
+An 8px base rhythm (`4, 8, 16, 24, 32, 48, 64`). Content maxes at 1180px. The workflow is a single vertical ledger with three numbered sections. Inputs group by proximity before borders. Independent draft sheets and receipt evidence use 2px ink borders with a 6px hard shadow, like paper stacked on a desk. Touch targets are at least 44px. At 390px, the header navigation becomes a bordered three-column strip, the hero illustration follows the first-screen copy, draft columns stack, and actions span the available width. Product, policy, and error routes keep the same header labels and order.
 
 ## Interaction grammar
 

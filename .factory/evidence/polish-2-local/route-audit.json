@@ -1,0 +1,137 @@
+[
+  {
+    "name": "root",
+    "path": "/",
+    "title": "Revision Receipts — Compare draft changes",
+    "h1": [
+      "Create receipts from draft changes."
+    ],
+    "links": [
+      {
+        "text": "Try the demo",
+        "width": 116.65625,
+        "height": 64
+      },
+      {
+        "text": "Make a receipt",
+        "width": 116.671875,
+        "height": 64
+      },
+      {
+        "text": "Privacy",
+        "width": 116.65625,
+        "height": 64
+      }
+    ],
+    "scrollWidth": 390,
+    "viewportWidth": 390
+  },
+  {
+    "name": "demo",
+    "path": "/demo",
+    "title": "Demo — Revision Receipts",
+    "h1": [
+      "Try a completed revision receipt"
+    ],
+    "links": [
+      {
+        "text": "Try the demo",
+        "width": 116.65625,
+        "height": 64
+      },
+      {
+        "text": "Make a receipt",
+        "width": 116.671875,
+        "height": 64
+      },
+      {
+        "text": "Privacy",
+        "width": 116.65625,
+        "height": 64
+      }
+    ],
+    "scrollWidth": 390,
+    "viewportWidth": 390
+  },
+  {
+    "name": "privacy",
+    "path": "/privacy/",
+    "title": "Privacy — Revision Receipts",
+    "h1": [
+      "How Revision Receipts handles your data"
+    ],
+    "links": [
+      {
+        "text": "Try the demo",
+        "width": 116.65625,
+        "height": 70.375
+      },
+      {
+        "text": "Make a receipt",
+        "width": 116.671875,
+        "height": 70.375
+      },
+      {
+        "text": "Privacy",
+        "width": 116.65625,
+        "height": 70.375
+      }
+    ],
+    "scrollWidth": 390,
+    "viewportWidth": 390
+  },
+  {
+    "name": "terms",
+    "path": "/terms/",
+    "title": "Terms — Revision Receipts",
+    "h1": [
+      "Terms for using Revision Receipts"
+    ],
+    "links": [
+      {
+        "text": "Try the demo",
+        "width": 116.65625,
+        "height": 70.375
+      },
+      {
+        "text": "Make a receipt",
+        "width": 116.671875,
+        "height": 70.375
+      },
+      {
+        "text": "Privacy",
+        "width": 116.65625,
+        "height": 70.375
+      }
+    ],
+    "scrollWidth": 390,
+    "viewportWidth": 390
+  },
+  {
+    "name": "404",
+    "path": "/404.html",
+    "title": "Page not found — Revision Receipts",
+    "h1": [
+      "This page does not exist"
+    ],
+    "links": [
+      {
+        "text": "Try the demo",
+        "width": 116.65625,
+        "height": 70.375
+      },
+      {
+        "text": "Make a receipt",
+        "width": 116.671875,
+        "height": 70.375
+      },
+      {
+        "text": "Privacy",
+        "width": 116.65625,
+        "height": 70.375
+      }
+    ],
+    "scrollWidth": 390,
+    "viewportWidth": 390
+  }
+]

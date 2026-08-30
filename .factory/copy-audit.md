@@ -1,4 +1,4 @@
-# Copy audit — polish round 1
+# Copy audit — polish round 2
 
 Counting method: whitespace-delimited words after removing presentation punctuation. Hyphenated terms, URLs, commands, and placeholders count as one word.
 
@@ -26,6 +26,7 @@ At 390×844, the headline, audience, primary action, result sentence, and all th
 | Use the sample receipt without changing your own browser work. | 10 | Pass |
 | Review Jordan’s changed passages and reflections, then finish or export the sample receipt. | 13 | Pass |
 | Export an HTML receipt. | 4 | Pass |
+| Create your revision receipt. | 4 | Pass |
 | Make a revision receipt in three steps. | 7 | Pass |
 | Unfinished work saves in this browser as you type. | 9 | Pass |
 | Required fields are marked with an asterisk. | 7 | Pass |
@@ -75,7 +76,7 @@ No sentence exceeds 22 words. No sentence uses the banned marketing terms: lever
 
 ## Headings and terminology
 
-Headings name their task or section. The prior abstract headings are now **Explain why each passage changed** and **Review the finished revision receipt**. The downloaded page uses **Revision receipt for `<student>`**.
+Headings name their task or section. The editor is **Create your revision receipt**, while the separate overview is **Make a revision receipt in three steps**. The prior abstract headings are now **Explain why each passage changed** and **Review the finished revision receipt**. The downloaded page uses **Revision receipt for `<student>`**.
 
 | Concept | One term used |
 | --- | --- |
