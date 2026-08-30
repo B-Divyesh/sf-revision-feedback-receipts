@@ -1,8 +1,4 @@
 {
-  "navigationFallback": {
-    "rewrite": "/index.html",
-    "exclude": ["/assets/*", "/demo/*", "/privacy/*", "/terms/*", "/404.html", "/*.svg", "/*.xml", "/*.txt", "/*.webmanifest", "/sw.js"]
-  },
   "routes": [
     {
       "route": "/demo",

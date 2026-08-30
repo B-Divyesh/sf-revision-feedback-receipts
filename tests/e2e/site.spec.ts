@@ -45,6 +45,7 @@ test('repairs the verifier landing, demo, metadata, and 404 findings', async ({ 
   };
   expect(config.responseOverrides?.['404']).toEqual({ rewrite: '/404.html', statusCode: 404 });
   expect(config.routes).toContainEqual({ route: '/demo', rewrite: '/demo/index.html' });
+  expect(config).not.toHaveProperty('navigationFallback');
 
   if (testInfo.project.name === 'chromium') {
     for (const path of ['/', '/demo', '/404.html']) {
