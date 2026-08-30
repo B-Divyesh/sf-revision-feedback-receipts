@@ -14,12 +14,34 @@ interface AppState {
   phase: Phase;
 }
 
-const STORAGE_KEY = 'revision-receipts-work-v1';
+const REAL_STORAGE_KEY = 'revision-receipts-work-v1';
+const DEMO_STORAGE_KEY = 'demo:revision-receipts-work-v1';
+const isDemo = window.location.pathname === '/demo' || window.location.pathname === '/demo/' || new URLSearchParams(window.location.search).get('demo') === '1';
+const STORAGE_KEY = isDemo ? DEMO_STORAGE_KEY : REAL_STORAGE_KEY;
 const MAX_DRAFT_LENGTH = 100_000;
 const defaultState: AppState = {
   studentName: '', assignmentName: '', goals: [''], originalDraft: '', revisedDraft: '',
   selections: [], reflections: [], phase: 'drafts',
 };
+
+function sampleState(): AppState {
+  return {
+    studentName: 'Jordan K.',
+    assignmentName: 'Community park argument',
+    goals: [
+      'Use specific evidence to support the claim',
+      'Explain how the evidence connects to the claim',
+    ],
+    originalDraft: 'Our town needs a park. Parks are good. This would help everyone.',
+    revisedDraft: 'Our town needs a park. A 2025 survey found that 68 percent of residents lack a nearby green space. This would help everyone. The evidence makes the need concrete.',
+    selections: ['change-1', 'change-2'],
+    reflections: [
+      'I replaced a vague statement with survey evidence so the claim uses a specific fact.',
+      'I added a sentence that explains why the survey matters to the town.',
+    ],
+    phase: 'evidence',
+  };
+}
 
 const byId = <T extends HTMLElement>(id: string): T => {
   const element = document.getElementById(id);
@@ -43,13 +65,36 @@ function readState(): AppState {
   }
 }
 
-let state = readState();
+function hasSavedState(): boolean {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(STORAGE_KEY) ?? '') as Partial<AppState>;
+    return Boolean(parsed && Array.isArray(parsed.goals));
+  } catch {
+    return false;
+  }
+}
+
+const hasInitialSavedState = hasSavedState();
+let state = isDemo && !hasInitialSavedState ? sampleState() : readState();
+if (isDemo && !hasInitialSavedState) localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
 let diff: DiffResult | null = null;
 let saveTimer = 0;
 
 function saveState(): void {
   window.clearTimeout(saveTimer);
   saveTimer = window.setTimeout(() => localStorage.setItem(STORAGE_KEY, JSON.stringify(state)), 180);
+}
+
+function resetDemo(): void {
+  state = sampleState();
+  diff = null;
+  localStorage.setItem(DEMO_STORAGE_KEY, JSON.stringify(state));
+  window.location.reload();
+}
+
+function startForReal(): void {
+  localStorage.removeItem(DEMO_STORAGE_KEY);
+  window.location.assign('/');
 }
 
 function setPhase(phase: Phase): void {
@@ -414,6 +459,19 @@ bindDraft('revised-draft', 'revisedDraft');
 renderGoals();
 updateCounts();
 
+if (isDemo) {
+  document.body.classList.add('demo-mode');
+  document.title = 'Demo — Revision Receipts';
+  document.querySelector<HTMLLinkElement>('link[rel="canonical"]')?.setAttribute('href', 'https://revision-feedback-receipts.sociobot.in/demo');
+  byId('demo-banner').hidden = false;
+  byId('reset-demo').addEventListener('click', resetDemo);
+  byId<HTMLAnchorElement>('start-real').addEventListener('click', (event) => {
+    event.preventDefault();
+    startForReal();
+  });
+  byId('start-over').textContent = 'Reset demo';
+}
+
 (['student-name', 'assignment-name'] as const).forEach((id) => {
   const input = byId<HTMLInputElement>(id);
   input.addEventListener('input', () => {
@@ -509,8 +567,12 @@ byId('copy-summary').addEventListener('click', async () => {
   }
 });
 byId('start-over').addEventListener('click', () => {
+  if (isDemo) {
+    resetDemo();
+    return;
+  }
   if (!window.confirm(`Clear ${state.studentName || 'this student'}’s drafts, goals, and receipt from this device? This cannot be undone.`)) return;
-  localStorage.removeItem(STORAGE_KEY);
+  localStorage.removeItem(REAL_STORAGE_KEY);
   window.location.reload();
 });
 

@@ -1,133 +1,93 @@
 # Revision Receipts — repair handoff
 
-## Independent verification 3 — 2026-08-28 UTC — **FAIL / RELEASE BLOCKED**
-
-Candidate `fc04028226e74de07aade8903f1742aa1baf8f0d` and https://revision-feedback-receipts.sociobot.in were independently verified from a clean checkout. The live public build exactly matches the rebuilt candidate, but it **must not be released**:
-
-1. `.factory/claims.json` is missing, so the mandatory claim-test release gate cannot run. The live page and README contain unlisted privacy, offline, autosave, export, no-account/no-score, and “under two minutes” claims.
-2. There is no visible one-click **“Try it with sample data”** action, no actual `/demo` sandbox, no demo banner/reset/start-for-real controls, and no `.factory/demo.md`. `/demo` is merely the empty root fallback.
-3. The cold-page H1 (“Show the work between drafts.”) is metaphorical rather than the mandated plain-words description.
-
-Core local/live behavior otherwise passed: clean install, 6 unit tests, production build, 7 applicable Playwright tests, live normal/invalid/file-recovery workflows, PWA offline reload, 390px boundaries, keyboard/reduced-motion checks, and axe serious/critical checks. Full exact evidence and remaining medium/low defects are in `.factory/verification-3.md`.
-
-**Required before release:** implement the isolated sample demo, document it, add and pass all claim tests, rewrite the cold first screen, redeploy, and obtain a fresh independent PASS.
-
 ## Status
 
-**PASS — the two release blockers reported for candidate `2c2dd5b5d7b8ea6c42511b7a64702afab08b799f` are repaired and deployed.**
+**PASS — repair prepared for deployment.**
 
-- Work order: `revision-feedback-receipts-repair-3`
-- Verification report commit: `dbaf3363017d2ae70fe9b972431f2572260fe711`
-- Repair commit: `122e921` (`fix: contain boundary content on mobile`)
-- Production: <https://revision-feedback-receipts.sociobot.in/>
-- Azure deployment ID: `14a6be84-d03d-49f9-b644-8a17a88a22e6`
-- Artifact/deployment class remains `static-web` / Azure Static Web Apps, with `dist/` as the site root.
+- Work order: `revision-feedback-receipts-repair-4`
+- Verification report commit repaired: `cf78e7bb72fc7a001af0246612284dac41ccead9`
+- Candidate reviewed: `fc04028226e74de07aade8903f1742aa1baf8f0d`
+- Artifact/deployment class: unchanged `static-web` / Azure Static Web Apps (`dist/` site root)
+- Repair commit: recorded after the final verification below.
 
 ## Findings reproduced and repaired
 
-### Maximum-length mobile overflow
+### Missing claim contract
 
-The verifier's exact 390 × 844 boundary case was reproduced before editing: an 80-character unbroken student name, 120-character assignment, 180-character goal, and 800-character reflection expanded the evidence document to 2,432 px and the receipt to 9,277 px. An ordinary Playwright click on **Finish the receipt** timed out because the expanded layout intercepted interaction.
+The reported failure was reproduced before editing: `/demo` returned the empty root workspace, its title was `Revision Receipts — Show what changed`, the cold H1 was `Show the work between drafts.`, the sample CTA/banner were absent, and no `.factory/claims.json` existed.
 
-The root cause was intrinsic min-content sizing in nested grid tracks combined with no emergency wrapping on user-rendered goal, metadata, and reflection text. The repair:
+`.factory/claims.json` now declares ten observable claims. Each has one exact `@claim:<id>` Playwright test from a clean `/demo` entry point. `npm run test:claims` builds once and runs all ten declared commands separately. Coverage includes the demo boundary, no-account receipt creation, the two-draft/goals/reflection workflow, same-origin browser-only data flow, local autosave, portable HTML export, no-score/human-review limits, source-only receipt text, and controlled offline reload.
 
-- uses `minmax(0, 1fr)` for goal, evidence, receipt metadata, and receipt evidence tracks;
-- applies `overflow-wrap: anywhere` to every relevant user-rendered goal, student, assignment, reflection, and quoted field;
-- applies the same containment and wrapping rules to the self-contained downloaded HTML receipt;
-- adds `box-sizing: border-box` and narrow-screen padding to the export so its paper surface cannot exceed the viewport.
+### One-click isolated demo and plain first screen
 
-After repair, local and live evidence, finished receipt, and downloaded receipt each measure `scrollWidth 390` at `innerWidth 390`. The finish action works through an ordinary pointer click.
+`/demo` is now a built static page (`dist/demo/index.html`) with Azure routing for the no-trailing-slash URL. It starts with a realistic Jordan K. community-park argument, two feedback goals, detected passages, selected evidence, and reflections. The persistent **Demo — sample data, nothing is saved** banner supplies **Reset demo** and **Start for real**.
 
-### Mobile home touch target
+Demo data uses only `demo:revision-receipts-work-v1`; real work remains under `revision-receipts-work-v1`. Reset restores the shipped sample. Start-for-real deletes only the demo key. Demo mode removes the marketing hero so the first mobile viewport immediately shows populated product fields. `.factory/demo.md` documents the URL, sample, namespace, and controls.
 
-The home link was reproduced at 124 × 38 CSS px. It now retains the 38 px visible mark on narrow screens but has a 44 px minimum link height. Local and live measurement is 124.1875 × 44 CSS px.
+The landing H1 is now the plain-words **Create receipts from draft changes.** The first primary action is **Try it with sample data**, followed by a clear result sentence. The untestable “under two minutes” statement was removed. `.factory/copy-audit.md` records landing sentence word counts, banned-word review, and terminology.
 
-### Exact regression coverage
+### Every remaining verification gap
 
-`tests/e2e/app.spec.ts` now contains a mobile-only boundary regression that:
+- Added a designed `404.html`, Azure 404 response override, and an end-to-end regression for its title, H1, return link, and configuration.
+- Added canonical, Open Graph, Twitter-card, Apple touch icon, and route-specific titles for home, demo, privacy, terms, and 404. Added the social preview derivative with design provenance.
+- Added a consistent footer on every route with the product one-liner, Demo/Privacy/Terms, Param Factory attribution, and build ID.
+- Added real ESLint plus explicit `typecheck` and `test:claims` scripts.
+- Strengthened the PWA fetch policy: precached assets are matched with `ignoreVary` (so Vary-bearing module requests work offline), and only navigation requests receive an HTML fallback. Demo navigations use the cached demo shell. The offline regression owns its own browser context, proves worker activation, query-versioned update/controller takeover, and an offline demo reload.
+- Preserved all previously passing workflows: validation/recovery, text/Markdown file handling, safe escaped download, local persistence, boundary wrapping, desktop/mobile layouts, keyboard controls, and reduced motion.
 
-1. asserts the configured viewport is 390 px and the home target is at least 44 × 44 px;
-2. enters unbroken values at all four declared maxima;
-3. generates the evidence view and asserts `documentElement.scrollWidth <= innerWidth`;
-4. uses a normal click to finish and repeats the width assertion on the receipt;
-5. downloads the portable receipt, opens it in a second 390 px page, and repeats the width assertion.
+## Final verification evidence
 
-The earlier service-worker repair and every previously passing product behavior were preserved.
-
-## Clean repository verification
-
-Run from `/work/repo` on 2026-08-28 UTC:
+Run from a clean install on 2026-08-30 UTC:
 
 ```bash
 npm ci
 npm audit --omit=dev --audit-level=high
 npm test
+npm run lint
+npm run typecheck
 npm run build
 npm run test:e2e -- --reporter=list
+npm run test:claims
+git diff --check
 ```
 
 Results:
 
-- Clean install: 60 packages installed; audit found 0 vulnerabilities.
+- `npm ci`: 161 packages installed; `npm audit --omit=dev --audit-level=high`: 0 vulnerabilities.
 - Unit: 6/6 Vitest tests passed.
-- Type/build: `tsc --noEmit` and Vite 7.3.6 passed; `dist/index.html` exists.
-- E2E: 7 applicable Playwright tests passed; 3 intentional project skips avoid duplicating the desktop-only legal/PWA coverage and the mobile-only boundary case.
-- Lint: no lint task or lint configuration exists; strict TypeScript checking is part of the build.
-- Package/consumer: not applicable to this static website.
+- Lint and strict TypeScript: passed.
+- Production build: passed; `dist/index.html`, `dist/demo/index.html`, and `dist/404.html` exist.
+- Browser suite: 27 passed, 3 intentional project skips (desktop-only static legal/PWA checks and mobile-only boundary check); desktop and 390×844 mobile both exercised.
+- Claim suite: all ten declared claim commands passed; the dedicated offline test has one intentional mobile-project skip because it owns one Chromium browser context.
 - `git diff --check`: passed.
+- Package/consumer check: not applicable to this static website.
 
-An initial concurrent E2E run had one timeout in the unchanged mobile happy-path goal-add step. That test passed immediately in isolation, and a complete unmodified rerun passed all 7 applicable tests.
+The final local browser verification on `http://127.0.0.1:4175/` recorded HTTPS-class page checks with no console/page errors: title present, `lang=en`, one H1, one main landmark, no missing image alts, and no unlabeled buttons. The root test also proves the first Tab reaches the skip link and Enter moves focus into `main`. Axe via `@axe-core/playwright` found zero serious/critical violations on the receipt, privacy page, terms page, landing page, demo page, and 404 page.
 
-## Browser, interaction, and accessibility evidence
+Lighthouse 12.8.2 simulated-mobile against the final local production build:
 
-- Chromium desktop at 1440 × 1000 and mobile at 390 × 844 were exercised end to end and visually inspected. No clipping or horizontal overflow was observed.
-- Desktop and mobile normal workflows, validation, persistence, safe download, and the new maximum-boundary workflow pass.
-- Keyboard: first Tab exposes **Skip to main content** at 16 px from the top with a 4 px focus outline; Enter moves to `#main`, and the next Tab reaches **Make a revision receipt**. No trap was found.
-- Reduced motion: button transition duration becomes `1e-05s`; root scrolling becomes automatic.
-- Mobile maximum-content receipt: axe reports 0 total violations (therefore 0 serious/critical). Existing app, receipt, privacy, and terms axe checks also pass.
-- Semantics remain `lang="en"`, one H1, one main landmark, named controls, and complete image alt attributes. Body type remains 16 px.
-- A 200% root-text smoke test retained no horizontal overflow.
-- `/opt/fleet/lib/verify-url.sh` passed live: HTTPS 200, 879 ms observed load, correct title/lang/H1/main/alts/button names, and no console errors.
-- Manual desktop/mobile runs recorded no console errors or uncaught page errors.
-
-## Privacy, PWA, policies, and identity
-
-- The live maximum-boundary workflow requested only `https://revision-feedback-receipts.sociobot.in`; it made 0 fetch/XHR/WebSocket application-data requests. No third-party script, font, analytics, telemetry, or classroom-data endpoint was introduced.
-- Storage and export behavior remains browser-local under the documented `revision-receipts-work-v1` key.
-- The production service worker has 12 unique precache URLs, no source maps, and only emitted files. The automated lifecycle test proves install, query-versioned update, controller takeover, and controlled offline reload.
-- A fresh live lifecycle check reached `activated`, controlled the page after reload, updated both active worker and controller, and served an HTTP 200 offline reload with the correct title and visible offline banner.
-- Live root policy: CSP is self-only for default/script/connect and denies framing; HSTS, `strict-origin-when-cross-origin`, `nosniff`, and restrictive camera/microphone/geolocation permissions are present.
-- Cache policy: HTML `public, must-revalidate, max-age=30`; hashed assets `public, max-age=31536000, immutable`; `/sw.js` `no-cache`.
-- All 18 publicly served build files match local `dist/` byte-for-byte. `staticwebapp.config.json` is consumed by Azure and is not a public artifact.
-
-Selected SHA-256 values:
-
-- `dist/index.html`: `f8a38b5f90e80934a55d8b385c6d50fc16ad1a972ced575d01cff009917dbba4`
-- `dist/sw.js`: `cb71958cd0a75703560530259e0d8f2196684c12f59189e03b25e31bcaa4e21e`
-- app JS: `0130f21de10c70e01d49937f061ab8bbb308b740f18c0a98bd37cdb76f44aaf6`
-- app CSS: `d3796f981429e6cddf560df280046fa872b0c53cf74139f64524d9d2e0054a51`
-
-## Performance
-
-Live Lighthouse 13.4.1 simulated-mobile results:
-
-| Category/metric | Result |
-|---|---:|
+| Category | Score |
+| --- | ---: |
 | Performance | 100 |
 | Accessibility | 100 |
 | Best practices | 100 |
 | SEO | 100 |
-| FCP | 0.9 s |
-| LCP | 1.1 s |
-| TBT | 0 ms |
-| CLS | 0 |
-| Interactive | 1.1 s |
-| Total transfer | 45 KiB |
 
-Build budgets remain comfortably within contract: app JS 16,857 bytes plus a 771-byte Vite helper, CSS 15,316 bytes, no fonts, 29,842-byte mobile hero, and 88,136-byte desktop hero.
+FCP was 0.9 s, LCP 1.4 s, TBT 0 ms, CLS 0, and total transfer 47 KiB. The initial application JS is 18,492 bytes (6,647 gzip); app CSS is 16,460 bytes (4,236 gzip); mobile hero is 29,842 bytes. All are below the static-product budgets.
 
-## Known intentional limits and next step
+The browser-only claim records every demo workflow request and permits only the same local origin. There are no analytics, remote fonts, third-party scripts, or classroom-data endpoints. Local response-policy source is `public/staticwebapp.config.json`: self-only CSP with `frame-ancestors 'none'`, strict-origin referrer policy, `nosniff`, restrictive permissions policy, immutable assets, no-cache service worker, `/demo` rewrite, and a real 404 override.
 
-No release-blocking gaps remain. Product limits are unchanged: deterministic sentence/line diffing is not semantic analysis; textual change is not proof of learning, authorship, causation, or quality; work does not sync across devices; and only plain-text/Markdown drafts are accepted. Offline use begins after one successful online visit.
+Final selected build hashes:
 
-Proceed to independent release verification, then the planned four-week classroom pilot.
+- `dist/index.html`: `0eaa302f3320a621c55ec95ccb5d8e779d186d0bed18fe7a7d2851e675a5932b`
+- `dist/demo/index.html`: `48255349ba93984e3695c84b368869997bdd2ec41bffb2649d166781a602184b`
+- `dist/sw.js`: `c4f7eb738216aad30471325ce11f3998e89ef31d8bfbabedb9f1cd89b3a5e159`
+- `dist/404.html`: `012e5ce08d7c34d6df4c2c552699561f6a813c1938829d006569a28445c00954`
+
+## Known limits
+
+The diff is deterministic sentence/line comparison, not semantic analysis. Textual change remains evidence for a human conversation, not proof of learning, authorship, causation, or quality. Work does not sync across browsers or devices. Only plain-text and Markdown drafts are accepted. Offline use begins after one successful online visit.
+
+## Deployment and post-deploy check
+
+Deploy `dist/` through the static-work-app work-order configuration, then run `/opt/fleet/lib/verify-url.sh https://revision-feedback-receipts.sociobot.in/ <evidence-dir>` and compare the published route hashes above with local `dist/`. Record the deployment ID and live comparison result here after deployment.

@@ -9,9 +9,14 @@ function precacheUrls(): string[] {
   return JSON.parse(match[1]) as string[];
 }
 
-test('production service worker precaches emitted files, updates, and serves offline', async ({ page, context }, testInfo) => {
+test('@claim:offline-reload production service worker precaches emitted files, updates, and serves offline', async ({ browser }, testInfo) => {
   test.skip(testInfo.project.name === 'mobile', 'The production service worker is covered once in Chromium; mobile uses the same shell.');
 
+  // The offline claim owns this context. It must never close or take offline the
+  // shared Playwright context used by other browser tests.
+  const context = await browser.newContext();
+  const page = await context.newPage();
+  try {
   const shell = precacheUrls();
   const staleCandidateUrls = [
     '/assets/privacy-CSUSwM90.js',
@@ -30,7 +35,7 @@ test('production service worker precaches emitted files, updates, and serves off
     expect(response.status(), `${url} must return 200 before it is precached`).toBe(200);
   }
 
-  await page.goto('/');
+  await page.goto('/demo/');
   await expect.poll(async () => page.evaluate(async () => {
     const registration = await navigator.serviceWorker.ready;
     return registration.active?.state;
@@ -50,9 +55,13 @@ test('production service worker precaches emitted files, updates, and serves off
   await context.setOffline(true);
   try {
     await page.reload();
-    await expect(page).toHaveTitle(/Revision Receipts/);
+    await expect(page).toHaveTitle('Demo — Revision Receipts');
+    await expect(page.getByText('Demo — sample data, nothing is saved', { exact: false })).toBeVisible();
     await expect.poll(() => page.evaluate(() => Boolean(navigator.serviceWorker.controller))).toBe(true);
   } finally {
     await context.setOffline(false);
+  }
+  } finally {
+    await context.close();
   }
 });

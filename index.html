@@ -4,57 +4,75 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#d9ff57" />
-    <meta name="description" content="Turn teacher feedback and draft changes into a concise, student-owned revision receipt." />
+    <meta name="description" content="Compare two drafts with teacher feedback goals and create a student revision receipt in your browser." />
+    <link rel="canonical" href="https://revision-feedback-receipts.sociobot.in/" />
     <link rel="icon" href="/mark.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.webmanifest" />
-    <title>Revision Receipts — Show what changed</title>
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Revision Receipts" />
+    <meta property="og:title" content="Revision Receipts — Compare draft changes" />
+    <meta property="og:description" content="Compare two drafts with teacher feedback goals and create a student revision receipt in your browser." />
+    <meta property="og:url" content="https://revision-feedback-receipts.sociobot.in/" />
+    <meta property="og:image" content="https://revision-feedback-receipts.sociobot.in/assets/receipt-social.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Revision Receipts — Compare draft changes" />
+    <meta name="twitter:description" content="Compare two drafts with teacher feedback goals and create a student revision receipt in your browser." />
+    <meta name="twitter:image" content="https://revision-feedback-receipts.sociobot.in/assets/receipt-social.jpg" />
+    <title>Revision Receipts — Compare draft changes</title>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to main content</a>
     <div id="offline-banner" class="offline-banner" role="status" hidden>
       You’re offline. The tool still works; exports stay on this device.
     </div>
+    <aside id="demo-banner" class="demo-banner" aria-label="Demo controls" hidden>
+      <p><strong>Demo — sample data, nothing is saved</strong><span> Use the sample receipt without changing your own browser work.</span></p>
+      <div><button id="reset-demo" class="demo-control" type="button">Reset demo</button><a id="start-real" class="demo-control" href="/">Start for real</a></div>
+    </aside>
     <header class="site-header">
       <a class="brand" href="/" aria-label="Revision Receipts home">
         <img src="/mark.svg" width="44" height="44" alt="" />
         <span>Revision<br />Receipts</span>
       </a>
       <nav aria-label="Main navigation">
+        <a href="/demo">Try the demo</a>
         <a href="#make-receipt">Make a receipt</a>
-        <a href="#how-it-works">How it works</a>
+        <a href="/privacy/">Privacy</a>
       </nav>
       <span class="privacy-chip">Private by default</span>
     </header>
 
-    <main id="main">
+    <main id="main" tabindex="-1">
       <section class="hero" aria-labelledby="hero-title">
         <div class="hero-copy">
           <p class="eyebrow"><span>Free classroom tool</span> / No AI writing</p>
-          <h1 id="hero-title">Show the work<br /><em>between</em> drafts.</h1>
-          <p class="hero-lede">Turn 1–3 feedback goals, a first draft, and a revision into a concise receipt a teacher can check in under two minutes.</p>
-          <a class="button button-primary hero-action" href="#make-receipt">Make a revision receipt <span aria-hidden="true">↓</span></a>
-          <p class="local-note"><span aria-hidden="true">●</span> Drafts stay in this browser. Nothing is uploaded.</p>
+          <h1 id="hero-title">Create receipts from draft changes.</h1>
+          <p class="hero-lede">For writing teachers who need a quick record of how students used feedback.</p>
+          <div class="hero-actions"><a class="button button-primary" href="/demo">Try it with sample data <span aria-hidden="true">→</span></a><a class="button button-secondary" href="#make-receipt">Start a blank receipt <span aria-hidden="true">↓</span></a></div>
+          <p class="hero-action-note">Loads a completed sample; your real browser work stays separate.</p>
+          <p class="local-note"><span aria-hidden="true">●</span> Drafts are compared in this browser.</p>
         </div>
         <figure class="hero-art">
           <picture>
             <source media="(max-width: 700px)" srcset="/assets/hero-receipt-768.webp" />
             <img src="/assets/hero-receipt-1280.webp" srcset="/assets/hero-receipt-768.webp 768w, /assets/hero-receipt-1280.webp 1280w" sizes="(max-width: 700px) 100vw, 50vw" width="1280" height="853" alt="Marked-up paper drafts beside a blank receipt strip, red pencil, and lime highlighter" fetchpriority="high" decoding="async" />
           </picture>
-          <figcaption>Feedback in. Evidence out.</figcaption>
+          <figcaption>Before-and-after evidence</figcaption>
         </figure>
       </section>
 
       <section class="trust-strip" aria-label="Product principles">
-        <p><strong>01</strong> No accounts</p>
-        <p><strong>02</strong> No hidden score</p>
-        <p><strong>03</strong> Exportable evidence</p>
+        <p><strong>01</strong> No account needed</p>
+        <p><strong>02</strong> No automatic score</p>
+        <p><strong>03</strong> Export an HTML receipt</p>
       </section>
 
       <section id="make-receipt" class="workspace" aria-labelledby="workspace-title">
         <div class="section-intro">
-          <p class="kicker">The receipt desk</p>
-          <h2 id="workspace-title">Make one in three passes.</h2>
-          <p>Your draft is autosaved on this device as you work. Required fields are marked <span aria-hidden="true">*</span><span class="sr-only">with an asterisk</span>.</p>
+          <p class="kicker">Revision receipt</p>
+          <h2 id="workspace-title">Make a revision receipt in three steps.</h2>
+          <p>Unfinished work saves in this browser as you type. Required fields are marked <span aria-hidden="true">*</span><span class="sr-only">with an asterisk</span>.</p>
         </div>
 
         <ol class="step-list" aria-label="Receipt workflow">
@@ -173,21 +191,21 @@
 
       <section id="how-it-works" class="how-section" aria-labelledby="how-title">
         <div>
-          <p class="kicker">Built for the handoff</p>
-          <h2 id="how-title">A receipt, not a score.</h2>
+          <p class="kicker">How it works</p>
+          <h2 id="how-title">Make a revision receipt in three steps.</h2>
         </div>
         <ol>
-          <li><span>01</span><div><h3>Carry the feedback forward</h3><p>Teacher goals stay visible and specific while the student revises.</p></div></li>
-          <li><span>02</span><div><h3>Quote actual changes</h3><p>Changed passages are shown as before and after evidence, without an algorithmic grade.</p></div></li>
-          <li><span>03</span><div><h3>Ask for intention</h3><p>A short reflection makes the student’s decision visible for fast, human review.</p></div></li>
+          <li><span>01</span><div><h3>Set feedback goals</h3><p>Keep one to three teacher goals beside the drafts.</p></div></li>
+          <li><span>02</span><div><h3>Compare the drafts</h3><p>Choose the before-and-after passage that best fits each goal.</p></div></li>
+          <li><span>03</span><div><h3>Record the student’s explanation</h3><p>Export a receipt for human review, not an automatic grade.</p></div></li>
         </ol>
       </section>
     </main>
 
     <footer class="site-footer">
-      <div><strong>Revision Receipts</strong><p>Private, local-first evidence for better revision conversations.</p></div>
-      <nav aria-label="Legal navigation"><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></nav>
-      <p class="asset-note">Original AI-generated hero artwork; no student data used. © 2026 Sociobot.</p>
+      <div><strong>Revision Receipts</strong><p>Local evidence for teacher-led revision review.</p></div>
+      <nav aria-label="Footer navigation"><a href="/demo">Demo</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></nav>
+      <p class="asset-note">Original AI-generated hero artwork. Built by Param Factory · Build 2026.08.30.</p>
     </footer>
 
     <script type="module" src="/src/main.ts"></script>

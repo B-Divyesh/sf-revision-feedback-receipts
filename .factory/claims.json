@@ -1,0 +1,72 @@
+[
+  {
+    "id": "demo-sandbox",
+    "claim": "Try the sample without changing real browser work.",
+    "where": "Landing action and demo banner",
+    "test": "npm run test:e2e -- --grep @claim:demo-sandbox",
+    "sandbox": "Fresh browser context; seed real local work, open /demo, reset it, then start for real and assert only demo: storage was discarded."
+  },
+  {
+    "id": "no-account",
+    "claim": "No account is needed to create a sample receipt.",
+    "where": "Landing facts and privacy policy",
+    "test": "npm run test:e2e -- --grep @claim:no-account",
+    "sandbox": "Fresh /demo page; create the prefilled sample receipt without sign-in controls."
+  },
+  {
+    "id": "revision-workflow",
+    "claim": "Compare two drafts against feedback goals and record a student reflection for review.",
+    "where": "README and landing page",
+    "test": "npm run test:e2e -- --grep @claim:revision-workflow",
+    "sandbox": "Fresh /demo page; assert the two changed passages, selected evidence controls, reflections, and two finished receipt sections."
+  },
+  {
+    "id": "browser-only",
+    "claim": "Draft text stays in browser storage and the demo makes same-origin requests only.",
+    "where": "Landing privacy note and privacy policy",
+    "test": "npm run test:e2e -- --grep @claim:browser-only",
+    "sandbox": "Fresh /demo page; record every request through a completed receipt and assert same-origin requests only plus demo-only storage."
+  },
+  {
+    "id": "local-autosave",
+    "claim": "Unfinished work saves in this browser as you type.",
+    "where": "Receipt workspace",
+    "test": "npm run test:e2e -- --grep @claim:local-autosave",
+    "sandbox": "Fresh /demo page; edit the student field, wait for the local save, reload, and assert the edit remains in demo: storage."
+  },
+  {
+    "id": "receipt-export",
+    "claim": "Export an HTML receipt.",
+    "where": "Landing facts and completed receipt",
+    "test": "npm run test:e2e -- --grep @claim:receipt-export",
+    "sandbox": "Fresh /demo page; finish the sample and inspect the downloaded self-contained HTML for its evidence and reflection."
+  },
+  {
+    "id": "evidence-not-score",
+    "claim": "The receipt shows evidence and reflection, not an automatic score.",
+    "where": "Landing facts, how-it-works section, and terms",
+    "test": "npm run test:e2e -- --grep @claim:evidence-not-score",
+    "sandbox": "Fresh /demo page; finish the sample and assert its receipt contains before/after evidence and reflection with no score or grade output."
+  },
+  {
+    "id": "human-review-limit",
+    "claim": "A receipt is evidence for human review, not proof of learning, authorship, or quality.",
+    "where": "README, completed receipt, and terms",
+    "test": "npm run test:e2e -- --grep @claim:human-review-limit",
+    "sandbox": "Fresh /demo page; finish the sample and assert the visible receipt caveat states the human-review limit."
+  },
+  {
+    "id": "no-writing-generation",
+    "claim": "The receipt only quotes supplied draft passages and reflections.",
+    "where": "Landing eyebrow and terms",
+    "test": "npm run test:e2e -- --grep @claim:no-writing-generation",
+    "sandbox": "Fresh /demo page; finish the sample and assert its exact source passages and student reflections appear in the receipt."
+  },
+  {
+    "id": "offline-reload",
+    "claim": "Works offline after the first visit.",
+    "where": "README and privacy policy",
+    "test": "npm run test:e2e -- --grep @claim:offline-reload",
+    "sandbox": "Dedicated fresh browser context; load /demo online, wait for service-worker control, disable the network, reload, and assert the demo remains available."
+  }
+]

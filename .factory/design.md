@@ -57,6 +57,8 @@ The hero uses one original generated editorial still-life: overlapping marked-up
 
 Generation command: `/opt/fleet/lib/gen-image.sh "<prompt derived from sheet>" assets/src/hero-receipt.png 1536x1024 high` using the factory image deployment. Generated 2026-08-28. The selected image is original AI-generated artwork for this product; reviewed for accidental text, brands, people, and misleading UI. Source prompt is retained beside the image in `assets/src/hero-receipt.json`. Delivery exports are WebP with explicit dimensions and responsive variants, each under 300 KB.
 
+The social preview (`public/assets/receipt-social.jpg`, 1200×630) is a center-cropped, 84-quality JPEG derivative of the reviewed hero artwork, made locally on 2026-08-30. The 180×180 Apple touch icon (`public/apple-touch-icon.png`) is a local raster rendering of the hand-authored `mark.svg` on the paper palette. Neither derivative introduces people, readable student text, brands, or third-party material.
+
 ## Performance treatment
 
 Vanilla TypeScript, no runtime dependencies, system fonts, one responsive WebP illustration, and hand-authored CSS. The initial JS target is below 60 KB gzip and CSS below 25 KB. The service worker precaches the shell; generated receipt data never leaves the browser.
