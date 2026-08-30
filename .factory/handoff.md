@@ -25,7 +25,7 @@ The complete finding-by-finding mapping is in `.factory/polish-1.md`.
 
 ## Verification
 
-From a clean clone at `/tmp/revision-receipts-clean.1PSvlV`:
+From final clean clone `/tmp/revision-receipts-verified.nGNjc7` at tested source commit `2002ea9`:
 
 ```text
 npm ci                                            PASS — 161 packages, 0 vulnerabilities

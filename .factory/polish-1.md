@@ -27,7 +27,7 @@ No earlier `.factory/review-*.md` or `.factory/polish-*.md` files existed. Every
 
 ## Cumulative acceptance evidence
 
-- Every `.factory/claims.json` command passed independently from `/tmp/revision-receipts-clean.1PSvlV`: 13 claims, two browser projects where applicable, with one intentional duplicate mobile skip for the isolated offline context.
+- Every `.factory/claims.json` command passed independently from final clean clone `/tmp/revision-receipts-verified.nGNjc7`: 13 claims, two browser projects where applicable, with one intentional duplicate mobile skip for the isolated offline context.
 - Full clean-clone browser suite: 37 passed, 5 intentional project skips. Unit suite: 6 passed. Lint, strict TypeScript, production build, audit, and `git diff --check`: passed.
 - Lighthouse 12.8.2: performance 100, accessibility 100, best practices 100, SEO 100; FCP 0.9 s, LCP 1.4 s, TBT 0 ms, CLS 0. Report: `.factory/evidence/lighthouse-polish-1.json`.
 - Live verifier: title, `lang=en`, main landmark, one H1, alt text, button names, and zero console errors on `/` and `/?demo=1`. Reports: `.factory/evidence/live/root/verify.json` and `.factory/evidence/live/demo/verify.json`.
